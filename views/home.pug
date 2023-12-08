@@ -1,3 +1,20 @@
-p hi there
+// home.pug
 
-a(href = "/account/dashboard")
+head
+  title Home
+  script(src="/client.js")
+  link(rel="stylesheet" href="/styles.css")
+
+body
+  include ./partials/header
+  h1 Home
+  if artworks && artworks.length > 0
+    each artwork in artworks
+      div.artwork-container
+        div.artist-info
+          a #{artwork.Artist}
+        a(href=`/art/${artwork._id}`)
+          img(class='artwork-image', src=artwork.Poster, alt=artwork.Title)
+        
+  else
+    p No artworks available.

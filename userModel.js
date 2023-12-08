@@ -6,6 +6,7 @@ const userSchema = new mongoose.Schema({
     password: { type: String, default: 'qwerty' },
     type: { type: String, default: 'patron' },
     artworks: [],
+    following: [],
     loggedIn: { type: Boolean, default: false }
 });
 

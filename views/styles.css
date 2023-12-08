@@ -5,3 +5,24 @@
 #error {
     color: red;
 }
+
+.artwork-image {
+    width: 500px;
+    /* Adjust the width as needed */
+    height: 400px;
+    /* Adjust the height as needed */
+    display: block;
+    margin: 0 auto;
+    /* Center the images */
+    margin-bottom: 20px;
+    /* Add some space between images */
+}
+
+.artwork-container {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.artist-info {
+    margin-top: 10px;
+}

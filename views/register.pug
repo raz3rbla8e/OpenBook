@@ -2,7 +2,7 @@ html
   head
     title Register Page
     script(src="/client.js")
-    style(src="/styles.css")
+    link(rel="stylesheet" href="/styles.css")
 
   body
     h1 Register
@@ -12,5 +12,8 @@ html
       br
       label(for='password') Password:
       input(type='password', name='password', required)
+      if error
+        p#error= errortype
       br
       input(type='submit', value='Register')
+    p Already Have an Account? <a href="/account/login">Login here</a>

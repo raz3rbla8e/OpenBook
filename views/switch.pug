@@ -1,0 +1,42 @@
+form(action="/account/switch", method="POST")
+  if usertype === "patron"
+    h1 Switch to Artist
+    if(session.user.artworks.length > 0)
+        p You have already created art before, you can switch to artist type now
+
+        
+    else 
+        p You will need to post art to be an Artist type, please provide the following details:
+        label(for="title") Title:
+        input(type="text", name="title", required)
+
+        label(for="artist") Artist:
+        input(type="text", name="artist", required)
+
+        label(for="year") Year:
+        input(type="text", name="year", required)
+
+        label(for="category") Category:
+        input(type="text", name="category", required)
+
+        label(for="medium") Medium:
+        input(type="text", name="medium", required)
+
+        label(for="description") Description:
+        textarea(name="description", required)
+
+        label(for="poster") Poster URL:
+        input(type="text", name="poster", required)
+    if error
+        p#error= errortype
+    button(type="submit") Switch to Artist
+    p Changed your mind? <a href="/account/dashboard">Go back</a>
+  else if usertype === "artist"
+    h1 Switch to Patron
+    p You will lose the ability to post artworks
+    if error
+        p#error= errortype
+    button(type="submit") Switch to Patron
+    p Changed your mind? <a href="/account/dashboard">Go back</a>
+
+  

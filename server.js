@@ -5,6 +5,7 @@ const User = require('./userModel');
 const Artwork = require('./artModel');
 const bodyParser = require('body-parser');
 const accountRouter = require('./accountRouter');
+const mainRouter = require('./mainRouter');
 
 const morgan = require('morgan');
 
@@ -32,7 +33,7 @@ db.once('open', () => {
 
 
 const MongoDBStore = require('connect-mongodb-session')(session);
-const gal = new MongoDBStore({
+const openGallery = new MongoDBStore({
     uri: 'mongodb://127.0.0.1:27017/openGallery',
     collection: 'sessiondata'
 });
@@ -40,12 +41,13 @@ app.use(session({
     secret: '1234321',
     resave: true,
     saveUninitialized: true,
-    gallery: gal
+    openGallery: openGallery
 }));
 
 
 
 app.use('/account', accountRouter);
+app.use("/main", mainRouter);
 
 app.get('/', async (req, res) => {
     res.render("login");
