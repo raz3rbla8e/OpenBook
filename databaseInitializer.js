@@ -6,7 +6,7 @@ const User = require("./userModel");
 const fs = require("fs");
 const path = require("path");
 
-
+//idk
 let filepath = path.join(__dirname, 'gallery.json');
 const artworks = JSON.parse(fs.readFileSync(filepath, 'utf-8'));
 
