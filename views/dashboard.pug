@@ -1,0 +1,15 @@
+html
+  head
+    title Dashboard
+    script(src="/client.js")
+    link(rel="stylesheet", href="/styles.css")
+
+  body
+    h1 Dashboard
+    if session.user
+      p Welcome, #{session.user.username}!
+      p Your account type is: #{session.user.type}
+      a(href="/account/logout") Logout
+    else
+      p You are not logged in.
+      a(href="/account/login") Login

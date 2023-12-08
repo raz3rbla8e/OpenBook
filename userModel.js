@@ -5,7 +5,8 @@ const userSchema = new mongoose.Schema({
     username: { type: String, unique: true },
     password: { type: String, default: 'qwerty' },
     type: { type: String, default: 'patron' },
-    artworks: []
+    artworks: [],
+    loggedIn: { type: Boolean, default: false }
 });
 
 
