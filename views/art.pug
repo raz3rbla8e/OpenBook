@@ -1,0 +1,27 @@
+doctype html
+html
+  head
+    title #{artwork.Title} - Art Details
+    script(src="/client.js")
+    link(rel="stylesheet" href="/styles.css")
+
+  body
+    include ./partials/header
+    h1 #{artwork.Title} - Art Details
+    img(class='artwork-image', src=artwork.Poster, alt=artwork.Title)
+    ul
+      li Artist: 
+        a(href=`/user/${userid}`)= artwork.Artist
+      li Year: #{artwork.Year}
+      li Category: #{artwork.Category}
+      li Medium: #{artwork.Medium}
+      li Description: #{artwork.Description}
+    form(action=`/art/${artwork._id}/follow`, method="POST")
+        button(type="submit") Follow Artist
+    form(action=`/art/${artwork._id}/review`, method="POST")
+      label(for="review") Add a Review:
+      input(type="text", name="review", required)
+      button(type="submit") Send Review
+
+    form(action=`/art/${artwork._id}/like`, method="POST")
+      button(type="submit") Like Artwork

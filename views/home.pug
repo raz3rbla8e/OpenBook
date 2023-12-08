@@ -13,7 +13,7 @@ body
       div.artwork-container
         div.artist-info
           a #{artwork.Artist}
-        a(href=`/art/${artwork._id}`)
+        a(href=`/main/art/${artwork._id}`)
           img(class='artwork-image', src=artwork.Poster, alt=artwork.Title)
         
   else
