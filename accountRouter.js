@@ -60,8 +60,17 @@ router.post('/register', async (req, res) => {
     let user = new User({ username, password })
 
     try {
+        user.loggedIn = true;
         await user.save();
-        res.render('login');
+
+        req.session.user = {
+            _id: user._id,
+            username: user.username,
+            type: user.type,
+            loggedIn: true,
+            artworks: user.artworks,
+        }
+        res.redirect('/main/home');
     } catch (error) {
         // Handle any errors that occur during user creation
         res.render('register', { error: true, errortype: 'Error creating user' });
