@@ -11,13 +11,45 @@ html
       p Welcome, #{session.user.username}!
       p Your account type is: #{session.user.type}
 
-      if session.following && session.following.length > 0
-        p You are following the following artists:
+
+      if session.user.following && session.user.following.length > 0
+        p You are following the following users:
           ul
-            each artist in session.following
-              li= artist
+            each artist in session.user.following
+              li 
+                a(href=`/main/user/${artist._id}`)= artist.username
       else
-        p You are not following any artists.
+        p You are not following any users.
+
+
+      if(session.user.followedby && session.user.followedby.length > 0)
+        p You are followed by the following users:
+          ul
+            each patron in session.user.followedby
+              li 
+                a(href=`/main/user/${patron._id}`)= patron.username
+      else
+        p You are not followed by any users.
+
+      if session.user.likes && session.user.likes.length > 0
+        p You have liked the following artworks:
+          ul
+            each likedArtwork in session.user.likes
+              li 
+                a(href=`/main/art/${likedArtwork._id}`)= likedArtwork.Title
+      else
+        p You have not liked any artworks.
+
+      if(session.user.type == "artist")
+        if session.user.artworks && session.user.artworks.length > 0
+          p You have created the following artworks:
+            ul
+              each art in artworks
+                li 
+                  a(href=`/main/art/${art._id}`)= art.Title
+        else
+          p You have not created any artworks.
+
       a(href="/account/logout") Logout
       if session.user.type === "patron"
         p Change your account to artist type <a href="/account/switch">here</a>

@@ -1,0 +1,25 @@
+html
+  head
+    title #{user.username}'s Profile
+    script(src="/client.js")
+    link(rel="stylesheet" href="/styles.css")
+
+  body
+    include ./partials/header
+    h1 #{user.username}'s Profile
+
+    form(action=`/main/user/${user._id}/follow`, method="POST")
+        button(type="submit") Follow user
+    if following === true
+        p You are following this user.
+    else
+        p You are not following this user.
+    if user.type === "artist"
+        if user.artworks && user.artworks.length > 0
+            h2 #{user.username} has created the following artworks:
+            ul
+                each art in artlist
+                    li 
+                        a(href=`/main/art/${art._id}`)= art.Title
+        else
+            p This artist has not created any artworks yet.

@@ -77,18 +77,37 @@ router.get("/dashboard", async (req, res) => {
             if (user) {
                 // Get artist object IDs from the user object
                 const artistIds = user.following;
+                const userhasliked = user.userlikes;
+                req.session.user.likes = [];
+                for (let artid of userhasliked) {
+                    let artstuff = await Artwork.findById(artid);
+                    if (artstuff) {
+                        req.session.user.likes.push(artstuff);
+                    }
+                }
+
+                const userfollowedby = user.followedBy;
+                req.session.user.followedby = [];
+                for (let userid of userfollowedby) {
+                    let userstuff = await User.findById(userid);
+                    if (userstuff) {
+                        req.session.user.followedby.push(userstuff);
+                    }
+                }
+
+                const theartworks = user.artworks;
+                const artworksobj = await Artwork.find({ _id: { $in: theartworks } });
 
                 // Find all the artists from the IDs
                 const artists = await User.find({ _id: { $in: artistIds } });
 
-                // Add artist usernames to req.session.following
-                req.session.following = artists.map(artist => artist.username);
+                req.session.user.following = artists;
+                res.render("dashboard", { session: req.session, artworks: artworksobj });
             } else {
                 // Handle the case where the user object is not found
                 console.error('User not found in the database');
+                res.redirect("/account/login");
             }
-
-            res.render("dashboard", { session: req.session });
         } catch (error) {
             console.error('Error fetching user and following artists:', error);
             res.redirect("/account/login");

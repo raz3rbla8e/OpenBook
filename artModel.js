@@ -9,6 +9,7 @@ const artworkSchema = new mongoose.Schema({
     Medium: String,
     Description: String,
     Poster: String,
+    artlikes: []
 });
 
 

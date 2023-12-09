@@ -7,7 +7,9 @@ const userSchema = new mongoose.Schema({
     type: { type: String, default: 'patron' },
     artworks: [],
     following: [],
-    loggedIn: { type: Boolean, default: false }
+    followedBy: [],
+    loggedIn: { type: Boolean, default: false },
+    userlikes: []
 });
 
 

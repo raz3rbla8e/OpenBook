@@ -29,7 +29,7 @@ let db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 db.once('open', () => {
     console.log('Connected to MongoDB');
-})
+});
 
 
 const MongoDBStore = require('connect-mongodb-session')(session);
@@ -41,7 +41,7 @@ app.use(session({
     secret: '1234321',
     resave: true,
     saveUninitialized: true,
-    openGallery: openGallery
+    store: openGallery
 }));
 
 
