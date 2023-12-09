@@ -7,9 +7,10 @@ html
   body
     include ./partials/header
     h1 #{user.username}'s Profile
+    p #{user.username} is a #{user.type}.
+    if user.followedBy && user.followedBy.length > 0
+        p #{user.username} has #{user.followedBy.length} follower(s).
 
-
-    
     if following === true
         form(action=`/main/user/${user._id}/unfollow`, method="POST")
             button(type="submit") Unfollow user

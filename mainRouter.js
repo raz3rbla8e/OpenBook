@@ -95,6 +95,41 @@ router.post("/art/:id/like", async (req, res) => {
 
 });
 
+router.post("/art/:id/unlike", async (req, res) => {
+
+    if (req.session.user) {
+        try {
+            let artworkid = req.params.id;
+            let userid = req.session.user._id;
+
+            const user = await User.findById(userid);
+
+            if (!(user.userlikes.includes(artworkid))) {
+                res.redirect(`/main/art/${artworkid}`);
+                return;
+            }
+
+            user.userlikes = user.userlikes.filter(id => id !== artworkid);
+            await user.save();
+
+            const artwork = await Artwork.findById(artworkid);
+            artwork.artlikes = artwork.artlikes.filter(id => id !== userid.toString());
+            await artwork.save();
+
+            res.redirect(`/main/art/${artworkid}`);
+        }
+        catch (error) {
+            console.error('Error fetching artwork:', error);
+            res.status(500).send('Internal Server Error');
+        }
+    }
+    else {
+        res.redirect("/account/login");
+    }
+});
+
+
+
 router.post("/user/:id/follow", async (req, res) => {
 
     if (req.session.user) {
@@ -134,6 +169,39 @@ router.post("/user/:id/follow", async (req, res) => {
 
 });
 
+router.post("/user/:id/unfollow", async (req, res) => {
+    if (req.session.user) {
+        try {
+            let artistid = req.params.id;
+            let userid = req.session.user._id;
+
+            const artist = await User.findById(artistid);
+            const user = await User.findById(userid);
+
+            if (!user.following.includes(artistid)) {
+                res.redirect(`/main/user/${artistid}`);
+                return;
+            }
+
+          
+            user.following = user.following.filter(id => id.toString() !== artistid.toString());
+            await user.save();
+
+            
+            artist.followedBy = artist.followedBy.filter(id => id.toString() !== userid.toString());
+            await artist.save();
+
+            res.redirect(`/main/user/${artistid}`);
+        } catch (error) {
+            console.error('Error unfollowing artist:', error);
+            res.status(500).send('Internal Server Error');
+        }
+    } else {
+        res.redirect("/account/login");
+    }
+});
+
+
 router.get("/user/:id", async (req, res) => {
     let userid = req.params.id;
 
@@ -169,6 +237,9 @@ router.get("/user/:id", async (req, res) => {
     res.render("user", { user: user, session: req.session, artlist: listofart, following: following })
 
 });
+
+
+
 
 
 module.exports = router;
