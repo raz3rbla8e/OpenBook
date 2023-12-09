@@ -76,7 +76,7 @@ router.post("/art/:id/like", async (req, res) => {
             await user.save();
 
             const artwork = await Artwork.findById(artworkid);
-            artwork.artlikes.push(artworkid);
+            artwork.artlikes.push(userid.toString());
             await artwork.save();
 
             res.redirect(`/main/art/${artworkid}`);
@@ -95,7 +95,6 @@ router.post("/art/:id/like", async (req, res) => {
 
 });
 
-
 router.post("/user/:id/follow", async (req, res) => {
 
     if (req.session.user) {
@@ -111,10 +110,12 @@ router.post("/user/:id/follow", async (req, res) => {
                 return;
             }
 
-            user.following.push(artist._id);
+
+
+            user.following.push(artist._id.toString());
             await user.save();
 
-            artist.followedBy.push(user._id);
+            artist.followedBy.push(user._id.toString());
             await artist.save();
 
             res.redirect(`/main/user/${artistid}`);

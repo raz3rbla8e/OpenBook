@@ -8,12 +8,17 @@ html
     include ./partials/header
     h1 #{user.username}'s Profile
 
-    form(action=`/main/user/${user._id}/follow`, method="POST")
-        button(type="submit") Follow user
+
+    
     if following === true
+        form(action=`/main/user/${user._id}/unfollow`, method="POST")
+            button(type="submit") Unfollow user
         p You are following this user.
     else
+        form(action=`/main/user/${user._id}/follow`, method="POST")
+            button(type="submit") Follow user
         p You are not following this user.
+        
     if user.type === "artist"
         if user.artworks && user.artworks.length > 0
             h2 #{user.username} has created the following artworks:
