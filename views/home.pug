@@ -7,6 +7,16 @@ body
     h1 Home
     div.artworks
         if artworks && artworks.length > 0
+
+            // Pagination links
+            div.pagination
+                if currentPage > 1
+                    a(href=`/main/home?page=${currentPage - 1}`) Previous
+                span.page-info Page #{currentPage} of #{totalPages}
+                if currentPage < totalPages
+                    a(href=`/main/home?page=${currentPage + 1}`) Next
+
+
             each artwork in artworks
                 div.artwork-container
                     div.artist-info
