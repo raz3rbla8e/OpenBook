@@ -51,15 +51,48 @@ router.get("/home", async function (req, res) {
 router.get('/search', async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1;
-    const skip = (page - 1) * ITEMS_PER_PAGE;
-
-    res.render('search', { searchResults: [], totalPages: 1, currentPage: page });
+    res.render('search', { searchResults: [], totalPages: 1, currentPage: page, session: req.session});
   } catch (error) {
     console.error('Error rendering search page:', error);
     res.status(500).send('Internal Server Error');
   }
 });
 
+router.post('/search', async (req, res) => {
+  try {
+    const searchInput = req.body.searchInput.toLowerCase(); // Convert to lowercase for case-insensitive search
+    const page = parseInt(req.query.page) || 1;
+    const skip = (page - 1) * 10;
+
+    // Example: Search by Title, Artist, Category, and Medium
+    const searchResults = await Artwork.find({
+      $or: [
+        { Title: { $regex: searchInput, $options: 'i' } },
+        { Artist: { $regex: searchInput, $options: 'i' } },
+        { Category: { $regex: searchInput, $options: 'i' } },
+        { Medium: { $regex: searchInput, $options: 'i' } }
+      ]
+    })
+      .skip(skip)
+      .limit(10);
+
+    // Calculate total number of pages
+    const totalArtworks = await Artwork.countDocuments({
+      $or: [
+        { Title: { $regex: searchInput, $options: 'i' } },
+        { Artist: { $regex: searchInput, $options: 'i' } },
+        { Category: { $regex: searchInput, $options: 'i' } },
+        { Medium: { $regex: searchInput, $options: 'i' } }
+      ]
+    });
+    const totalPages = Math.ceil(totalArtworks / 10);
+
+    res.render('search', { searchResults, totalPages, currentPage: page , session: req.session });
+  } catch (error) {
+    console.error('Error during search:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
 
 
 router.get("/addArt", async function (req, res) {

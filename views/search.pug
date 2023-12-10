@@ -6,7 +6,7 @@ body
   include ./partials/header
   h1 Search Artworks
 
-  form(action="/search", method="POST")
+  form(action="/main/search", method="POST")
     label(for="searchInput") Search:
     input(type="text", name="searchInput", required)
 
@@ -18,7 +18,8 @@ body
     ul
       each artwork in searchResults
         li
-          a(href=`/art/${artwork._id}`) #{artwork.Title} by #{artwork.Artist}
+          a(href=`/main/art/${artwork._id}`) #{artwork.Title} by #{artwork.Artist}
+
   else
     p No results found.
 
@@ -26,7 +27,7 @@ body
   if totalPages > 1
     div.pagination
       if currentPage > 1
-        a(href=`/search?page=${currentPage - 1}`) Previous
+        a(href=`/main/search?page=${currentPage - 1}`) Previous
       span.page-info Page #{currentPage} of #{totalPages}
       if currentPage < totalPages
-        a(href=`/search?page=${currentPage + 1}`) Next
+        a(href=`/main/search?page=${currentPage + 1}`) Next
