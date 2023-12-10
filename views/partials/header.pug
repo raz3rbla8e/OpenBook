@@ -4,3 +4,8 @@ header
   a(href="/main/home", style="margin-left: 5px") Home
   |
   a(href="/account/dashboard" , style="margin-left: 5px") Dashboard
+
+  if session.user.type === "artist"
+    a(href="/main/addArt", style="margin-left: 5px") Add Artwork
+    | 
+    a(href="/main/addWork" , style="margin-left: 5px") Add workshop

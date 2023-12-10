@@ -7,8 +7,6 @@ html
 
   body
     include ./partials/header
-    if(session.user.type == "artist")
-        include ./partials/artistheaders
     h1 #{artwork.Title} - Art Details
     img(class='artwork-image', src=artwork.Poster, alt=artwork.Title)
     ul

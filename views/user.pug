@@ -6,8 +6,6 @@ html
 
   body
     include ./partials/header
-    if(session.user.type == "artist")
-      include ./partials/artistheaders
     h1 #{user.username}'s Profile
     p #{user.username} is a #{user.type}.
     if user.followedBy && user.followedBy.length > 0

@@ -26,3 +26,13 @@
 .artist-info {
     margin-top: 10px;
 }
+
+
+#main-header span,
+#artist-header span {
+    display: inline-block;
+    /* or use display: inline; */
+    margin-right: 10px;
+    /* Add margin or adjust as needed */
+}
+

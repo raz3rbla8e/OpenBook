@@ -5,8 +5,6 @@ html
 
   body
     include ./partials/header
-    if(session.user.type == "artist") 
-        include ./partials/artistheaders
     h1 Dashboard
     if session.user
       p Welcome, #{session.user.username}!
