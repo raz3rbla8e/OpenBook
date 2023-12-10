@@ -1,0 +1,19 @@
+html
+  head
+    title Workshop Application
+    link(rel="stylesheet", href="/styles.css")
+body
+    include ./partials/header
+    h1 Add Workshop
+
+    form(action="/main/addWork", method="POST")
+        label(for="title") Title:
+        input(type="text", name="title", required)
+
+        label(for="location") Location:
+        input(type="text", name="location", required)
+
+        label(for="date") Date:
+        input(type="text", name="date", placeholder="YYYY-MM-DD", required)
+
+        button(type="submit") Save

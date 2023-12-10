@@ -39,3 +39,11 @@ html
                         a(href=`/main/art/${art._id}`)= art.Title
         else
             p This artist has not created any artworks yet.
+        if user.workshops && user.workshops.length > 0
+            h2 #{user.username} has created the following workshops:
+            ul
+                each workshop in user.workshops
+                    li 
+                        a(href=`/main/work/${workshop._id}`)= workshop.title
+        else
+            p This artist has not created any workshops yet.

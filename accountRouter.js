@@ -126,6 +126,19 @@ router.get("/dashboard", async (req, res) => {
                     )
                 }
 
+                req.session.user.workshops = user.workshops
+                let participatingWorkshops = await User.find({ 'workshops.participants': req.session.user.username });
+                req.session.user.participatingWorkshops = [];
+
+                participatingWorkshops.forEach(user => {
+                user.workshops.forEach(workshop => {
+                    req.session.user.participatingWorkshops.push({
+                    _id: workshop._id,
+                    title: workshop.title,
+                    });
+                });
+                });
+
                 res.render("dashboard", { session: req.session, artworks: artworksobj });
             } else {
                 // Handle the case where the user object is not found

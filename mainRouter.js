@@ -7,6 +7,164 @@ const mongoose = require('mongoose');
 
 let globalSearchCriteria = {}
 
+router.post('/work/:id/join', async (req, res) => {
+  try {
+    const workshopId = req.params.id;
+
+    // Check if the user is logged in
+    if (!req.session.user) {
+      return res.redirect('/account/login');
+    }
+
+    // Find the workshop
+    const workshop = await User.findOne({ 'workshops._id': workshopId });
+    if (!workshop) {
+      return res.redirect('/account/dashboard');
+    }
+
+    // Check if the user is the host or already a participant
+    if (
+      workshop.host === req.session.user.username ||
+      (workshop.participants && workshop.participants.includes(req.session.user.username))
+    ) {
+      return res.redirect('/account/dashboard'); // User is already a participant or the host
+    }
+
+    // Add the user to the participants array
+    workshop.workshops.id(workshopId).participants.push(req.session.user.username);
+    await workshop.save();
+
+    res.redirect(`/main/work/${workshopId}`);
+  } catch (error) {
+    console.error('Error joining workshop:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+router.post('/work/:id/leave', async (req, res) => {
+  try {
+    // Assuming the workshop id is passed as a parameter in the URL
+    const workshopId = req.params.id;
+
+    // Find the user with the workshop
+    const user = await User.findOne({ 'workshops._id': workshopId });
+
+    if (!user) {
+      // Workshop or user not found
+      res.redirect('/account/dashboard');
+      return;
+    }
+
+    // Find the workshop in the user's workshops array
+    const workshopIndex = user.workshops.findIndex(w => w._id.toString() === workshopId);
+
+    if (workshopIndex === -1) {
+      // Workshop not found
+      res.redirect('/account/dashboard');
+      return;
+    }
+
+    // Remove the user from the participants array
+    const userIndex = user.workshops[workshopIndex].participants.indexOf(req.session.user.username);
+    if (userIndex !== -1) {
+      user.workshops[workshopIndex].participants.splice(userIndex, 1);
+    }
+
+    // Save the updated user object to the database
+    await user.save();
+
+    // Redirect the user to their dashboard or any other relevant page
+    res.redirect(`/main/work/${workshopId}`);
+  } catch (error) {
+    console.error('Error leaving workshop:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+
+router.get('/work/:id', async (req, res) => {
+  try {
+    // Assuming the workshop id is passed as a parameter in the URL
+    const workshopId = req.params.id;
+
+    // Validate if workshopId is a valid ObjectId
+    if (!mongoose.Types.ObjectId.isValid(workshopId)) {
+      res.redirect('/account/dashboard');
+      return;
+    }
+
+    // Find the user with the workshop
+    const user = await User.findOne({ 'workshops._id': workshopId });
+
+    if (!user) {
+      // Workshop or user not found
+      res.redirect('/account/login');
+      return;
+    }
+
+    // Find the workshop in the user's workshops array
+    const workshop = user.workshops.find(w => w._id.equals(mongoose.Types.ObjectId.createFromHexString(workshopId)));
+
+    if (!workshop) {
+      res.redirect("/account/dashboard");
+      return;
+    }
+
+    // Render the workshop details
+    res.render('work', { workshop, session: req.session });
+  } catch (error) {
+    console.error('Error fetching workshop details:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+router.get("/addWork", async function (req, res) {
+    if (req.session.user) {
+        res.render("addWork", { session: req.session });
+    }
+    else {
+        res.redirect("/account/login");
+    }
+});
+
+router.post('/addWork', async (req, res) => {
+  if(!(req.session.user)) {
+    res.redirect("/account/login");
+    return;
+  }
+  try {
+    // Assuming you have user authentication middleware to populate req.session.user
+    let curruser = await User.findById(req.session.user._id);
+
+    if (!curruser) {
+      // Handle the case where the user is not logged in
+      res.redirect('/account/login');
+      return;
+    }
+
+    let { title, location, date } = req.body;
+
+    // Create a new workshop object
+    let newWorkshop = {
+      title,
+      host: curruser.username,
+      location,
+      date,
+    };
+
+    // Add the workshop to the user's workshops array
+    curruser.workshops.push(newWorkshop);
+
+    // Save the updated user object to the database
+    await curruser.save();
+
+    // Redirect the user to their profile or any other relevant page
+    res.redirect(`/account/dashboard`);
+  } catch (error) {
+    console.error('Error adding workshop:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
 
 router.get("/home", async function (req, res) {
 

@@ -9,7 +9,17 @@ const userSchema = new mongoose.Schema({
     following: [],
     followedBy: [],
     loggedIn: { type: Boolean, default: false },
-    userlikes: []
+    userlikes: [],
+    workshops: [
+        {
+            title: String,
+            host: String,
+            location: String,
+            date: String,
+            participants: [],
+        }
+    ]
+    
 });
 
 

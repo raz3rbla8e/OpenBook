@@ -64,6 +64,24 @@ html
                   a(href=`/main/art/${art._id}`)= art.Title
         else
           p You have not created any artworks.
+      
+      if session.user.workshops && session.user.workshops.length > 0
+        p You have created the following workshops:
+          ul
+            each workshop in session.user.workshops
+              li 
+                a(href=`/main/work/${workshop._id}`)= workshop.title
+      else
+        p You have not created any workshops.
+      
+      if session.user.participatingWorkshops && session.user.participatingWorkshops.length > 0
+        p You are participating in the following workshops:
+          ul
+            each workshop in session.user.participatingWorkshops
+              li 
+                a(href=`/main/work/${workshop._id}`)= workshop.title
+      else
+        p You are not participating in any workshops.
 
       a(href="/account/logout") Logout
       if session.user.type === "patron"
