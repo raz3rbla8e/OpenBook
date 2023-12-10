@@ -28,7 +28,7 @@ html
                 a(href=`/main/art/${review.artworkid}`)= review.artwork
                 span : #{review.text}
     else
-        p You have not made any reviews.
+        p They have not made any reviews.
 
     if user.type === "artist"
         if user.artworks && user.artworks.length > 0

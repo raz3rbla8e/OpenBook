@@ -48,6 +48,54 @@ router.get("/addArt", async function (req, res) {
     }
 });
 
+router.post('/addArt', async (req, res) => {
+    try {
+        // Extract artwork information from the request body
+        let { title, year, category, medium, description, poster } = req.body;
+
+        // Check if any required field is missing
+        if (!title || !year || !category || !medium || !description || !poster) {
+            return res.render("addArtwork", { error: true, errortype: 'Please fill in all fields' });
+        }
+
+        const existingArtwork = await Artwork.findOne({ Title: title });
+        if (existingArtwork) {
+            return res.render("addArt", { error: true, errortype: 'Artwork with this title already exists' , session: req.session});
+        }
+
+        let artist = req.session.user.username;
+
+        // Create a new Artwork model
+        const artwork = new Artwork({
+            Title: title,
+            Artist: artist,
+            Year: year,
+            Category: category,
+            Medium: medium,
+            Description: description,
+            Poster: poster
+        });
+
+        // Save the artwork to the database
+        await artwork.save();
+
+        // Update the artist's user object with the new artwork ID
+        const artistUser = await User.findOne({ username: artist });
+
+        if (artistUser) {
+            artistUser.artworks.push(artwork._id);
+            await artistUser.save();
+        }
+
+        // Redirect to a success page or any other desired route
+        res.redirect(`/main/home`);
+    } catch (error) {
+        console.error('Error adding artwork:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+
 
 router.get("/art/:id", async function (req, res) {
 

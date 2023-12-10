@@ -208,16 +208,23 @@ router.post("/switch", async (req, res) => {
                 }
                 else {
                     let title = req.body.title
-                    let artist = req.body.artist
                     let year = req.body.year
                     let category = req.body.category
                     let medium = req.body.medium
                     let description = req.body.description
                     let poster = req.body.poster
 
-                    if (!title || !artist || !year || !category || !medium || !description || !poster) {
+                    if (!title || !year || !category || !medium || !description || !poster) {
                         res.render("switch", { error: true, errortype: 'Please fill in all fields', session: req.session })
                     }
+
+                            // Check if the title already exists in the database
+                    const existingArtwork = await Artwork.findOne({ Title: title });
+                    if (existingArtwork) {
+                        return res.render("switch", { error: true, errortype: 'Artwork with this title already exists', session: req.session });
+                    }
+
+                    let artist = req.session.user.username;
                     
                     let artwork = new Artwork({
                         Title: title,

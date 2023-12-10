@@ -10,9 +10,6 @@ body
     label(for="title") Title:
     input(type="text", name="title", required)
 
-    label(for="artist") Artist:
-    input(type="text", name="artist", required)
-
     label(for="year") Year:
     input(type="text", name="year", required)
 
@@ -29,3 +26,6 @@ body
     input(type="text", name="poster", required)
 
     button(type="submit") Add Art
+    
+  if error
+        p#error= errortype
