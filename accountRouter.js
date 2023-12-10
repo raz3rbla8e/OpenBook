@@ -13,7 +13,7 @@ router.post('/login', async (req, res) => {
     let password = req.body.password;
 
     try {
-        const user = await User.findOne({ username, password });
+        let user = await User.findOne({ username, password });
 
         if (!user) {
             return res.render('login', { error: true, errortype: 'Invalid username or password' });
@@ -81,12 +81,12 @@ router.get("/dashboard", async (req, res) => {
     if (req.session.user) {
         try {
             // Fetch the user object from the database
-            const user = await User.findById(req.session.user._id);
+            let user = await User.findById(req.session.user._id);
 
             if (user) {
                 // Get artist object IDs from the user object
-                const artistIds = user.following;
-                const userhasliked = user.userlikes;
+                let artistIds = user.following;
+                let userhasliked = user.userlikes;
                 req.session.user.likes = [];
                 for (let artid of userhasliked) {
                     let artstuff = await Artwork.findById(artid);
@@ -95,7 +95,7 @@ router.get("/dashboard", async (req, res) => {
                     }
                 }
 
-                const userfollowedby = user.followedBy;
+                let userfollowedby = user.followedBy;
                 req.session.user.followedby = [];
                 for (let userid of userfollowedby) {
                     let userstuff = await User.findById(userid);
@@ -104,17 +104,17 @@ router.get("/dashboard", async (req, res) => {
                     }
                 }
 
-                const theartworks = user.artworks;
-                const artworksobj = await Artwork.find({ _id: { $in: theartworks } });
+                let theartworks = user.artworks;
+                let artworksobj = await Artwork.find({ _id: { $in: theartworks } });
 
                 // Find all the artists from the IDs
-                const artists = await User.find({ _id: { $in: artistIds } });
+                let artists = await User.find({ _id: { $in: artistIds } });
 
                 req.session.user.following = artists;
 
                 req.session.user.reviews = [];
 
-                const userReviews = await Artwork.find({ 'reviews.user': req.session.user._id });
+                let userReviews = await Artwork.find({ 'reviews.user': req.session.user._id });
 
                 for(let review of userReviews){
                     req.session.user.reviews.push(
@@ -145,7 +145,7 @@ router.get("/dashboard", async (req, res) => {
 router.get("/logout", async (req, res) => {
     try {
         if (req.session.user && req.session.user.loggedIn) {
-            const user = await User.findById(req.session.user._id);
+            let user = await User.findById(req.session.user._id);
 
             if (user) {
                 user.loggedIn = false;
@@ -173,7 +173,7 @@ router.get("/switch", async (req, res) => {
         try {
             let userid = req.session.user._id;
 
-            const user = await User.findById(userid);
+            let user = await User.findById(userid);
 
             usertype = user.type;
 
@@ -195,7 +195,7 @@ router.post("/switch", async (req, res) => {
         if (req.session.user) {
             if (req.session.user.type === "patron") {
                 if (req.session.user.artworks.length > 0) {
-                    const user = await User.findById(req.session.user._id);
+                    let user = await User.findById(req.session.user._id);
 
                     if (user) {
                         user.type = "artist";
@@ -220,7 +220,7 @@ router.post("/switch", async (req, res) => {
                     }
 
                             // Check if the title already exists in the database
-                    const existingArtwork = await Artwork.findOne({ Title: title });
+                    let existingArtwork = await Artwork.findOne({ Title: title });
                     if (existingArtwork) {
                         return res.render("switch", { error: true, errortype: 'Artwork with this title already exists', session: req.session });
                     }
@@ -238,7 +238,7 @@ router.post("/switch", async (req, res) => {
                     });
                     await artwork.save();
 
-                    const user = await User.findById(req.session.user._id);
+                    let user = await User.findById(req.session.user._id);
 
                     if (user) {
                         user.type = "artist";
@@ -255,7 +255,7 @@ router.post("/switch", async (req, res) => {
 
             } else if (req.session.user.type === "artist") {
 
-                const user = await User.findById(req.session.user._id);
+                let user = await User.findById(req.session.user._id);
 
                 if (user) {
                     user.type = "patron";

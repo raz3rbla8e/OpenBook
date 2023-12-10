@@ -23,7 +23,7 @@ router.get("/home", async function (req, res) {
             let endIndex = startIndex + pageSize;
 
             // Send only the artworks for the current page
-            const artworksForPage = allart.slice(startIndex, endIndex);
+            let artworksForPage = allart.slice(startIndex, endIndex);
 
             // Render the Pug file with the artworks for the current page
             res.render('home', { artworks: artworksForPage, totalPages, currentPage, session: req.session });
@@ -39,56 +39,7 @@ router.get("/home", async function (req, res) {
 });
 
 
-router.get('/search', async (req, res) => {
-  try {
-    const page = parseInt(req.query.page) || 1;
-    const perPage = 10;
-    const skip = (page - 1) * perPage;
 
-    const searchResults = await Artwork.find(globalSearchCriteria)
-      .skip(skip)
-      .limit(perPage);
-
-    const totalArtworks = await Artwork.countDocuments(globalSearchCriteria);
-    const totalPages = Math.ceil(totalArtworks / perPage);
-
-    res.render('search', { searchResults, totalPages, currentPage: page, session: req.session });
-  } catch (error) {
-    console.error('Error rendering search page:', error);
-    res.status(500).send('Internal Server Error');
-  }
-});
-
-
-router.post('/search', async (req, res) => {
-  try {
-    const searchInput = req.body.searchInput.toLowerCase();
-    const page = parseInt(req.query.page) || 1;
-    const perPage = 10;
-    const skip = (page - 1) * perPage;
-
-    globalSearchCriteria = {
-      $or: [
-        { Title: { $regex: searchInput, $options: 'i' } },
-        { Artist: { $regex: searchInput, $options: 'i' } },
-        { Category: { $regex: searchInput, $options: 'i' } },
-        { Medium: { $regex: searchInput, $options: 'i' } }
-      ]
-    };
-
-    const searchResults = await Artwork.find(globalSearchCriteria)
-      .skip(skip)
-      .limit(perPage);
-
-    const totalArtworks = await Artwork.countDocuments(globalSearchCriteria);
-    const totalPages = Math.ceil(totalArtworks / perPage);
-
-    res.render('search', { searchResults, totalPages, currentPage: page, session: req.session });
-  } catch (error) {
-    console.error('Error during search:', error);
-    res.status(500).send('Internal Server Error');
-  }
-});
 
 
 
@@ -120,7 +71,7 @@ router.post('/addArt', async (req, res) => {
             return res.render("addArtwork", { error: true, errortype: 'Please fill in all fields' });
         }
 
-        const existingArtwork = await Artwork.findOne({ Title: title });
+        let existingArtwork = await Artwork.findOne({ Title: title });
         if (existingArtwork) {
             return res.render("addArt", { error: true, errortype: 'Artwork with this title already exists' , session: req.session});
         }
@@ -128,7 +79,7 @@ router.post('/addArt', async (req, res) => {
         let artist = req.session.user.username;
 
         // Create a new Artwork model
-        const artwork = new Artwork({
+        let artwork = new Artwork({
             Title: title,
             Artist: artist,
             Year: year,
@@ -142,7 +93,7 @@ router.post('/addArt', async (req, res) => {
         await artwork.save();
 
         // Update the artist's user object with the new artwork ID
-        const artistUser = await User.findOne({ username: artist });
+        let artistUser = await User.findOne({ username: artist });
 
         if (artistUser) {
             artistUser.artworks.push(artwork._id);
@@ -168,7 +119,7 @@ router.get("/art/:id", async function (req, res) {
                 return;
             }
 
-            const artwork = await Artwork.findById(req.params.id);
+            let artwork = await Artwork.findById(req.params.id);
 
             if (!artwork) {
                 res.status(404).send('Not Found');
@@ -200,7 +151,7 @@ router.post("/art/:id/like", async (req, res) => {
             let artworkid = req.params.id;
             let userid = req.session.user._id;
 
-            const user = await User.findById(userid);
+            let user = await User.findById(userid);
 
             if (user.userlikes.includes(artworkid)) {
                 res.redirect(`/main/art/${artworkid}`);
@@ -210,7 +161,7 @@ router.post("/art/:id/like", async (req, res) => {
             user.userlikes.push(artworkid);
             await user.save();
 
-            const artwork = await Artwork.findById(artworkid);
+            let artwork = await Artwork.findById(artworkid);
             artwork.artlikes.push(userid.toString());
             await artwork.save();
 
@@ -237,7 +188,7 @@ router.post("/art/:id/unlike", async (req, res) => {
             let artworkid = req.params.id;
             let userid = req.session.user._id;
 
-            const user = await User.findById(userid);
+            let user = await User.findById(userid);
 
             if (!(user.userlikes.includes(artworkid))) {
                 res.redirect(`/main/art/${artworkid}`);
@@ -247,7 +198,7 @@ router.post("/art/:id/unlike", async (req, res) => {
             user.userlikes = user.userlikes.filter(id => id !== artworkid);
             await user.save();
 
-            const artwork = await Artwork.findById(artworkid);
+            let artwork = await Artwork.findById(artworkid);
             artwork.artlikes = artwork.artlikes.filter(id => id !== userid.toString());
             await artwork.save();
 
@@ -273,8 +224,8 @@ router.post("/user/:id/follow", async (req, res) => {
             let artistid = req.params.id;
             let userid = req.session.user._id;
 
-            const artist = await User.findById(artistid);
-            const user = await User.findById(userid);
+            let artist = await User.findById(artistid);
+            let user = await User.findById(userid);
 
             if (user.following.includes(artist._id)) {
                 res.redirect(`/main/user/${artistid}`);
@@ -311,8 +262,8 @@ router.post("/user/:id/unfollow", async (req, res) => {
             let artistid = req.params.id;
             let userid = req.session.user._id;
 
-            const artist = await User.findById(artistid);
-            const user = await User.findById(userid);
+            let artist = await User.findById(artistid);
+            let user = await User.findById(userid);
 
             if (!user.following.includes(artistid)) {
                 res.redirect(`/main/user/${artistid}`);
@@ -350,7 +301,7 @@ router.get("/user/:id", async (req, res) => {
         return;
     }
 
-    const user = await User.findById(userid);
+    let user = await User.findById(userid);
 
     if (!user) {
         res.status(404).send('Not Found');
@@ -361,13 +312,13 @@ router.get("/user/:id", async (req, res) => {
 
     let listofart = []
     for (let artid of artworkids) {
-        const art = await Artwork.findById(artid);
+        let art = await Artwork.findById(artid);
         listofart.push(art);
     }
 
     let reviews = [];
 
-    const theirReviews = await Artwork.find({ 'reviews.user':user._id });
+    let theirReviews = await Artwork.find({ 'reviews.user':user._id });
 
     for(let review of theirReviews)
     {
@@ -400,16 +351,16 @@ router.post('/art/:id/review', async (req, res) => {
         return;
     }
     try {
-        const artworkId = req.params.id;
-        const userId = req.session.user._id;
-        const reviewText = req.body.review;
+        let artworkId = req.params.id;
+        let userId = req.session.user._id;
+        let reviewText = req.body.review;
 
-        const user = await User.findById(userId);
+        let user = await User.findById(userId);
         // Fetch the artwork
-        const artwork = await Artwork.findById(artworkId);
+        let artwork = await Artwork.findById(artworkId);
 
         // Create the review
-        const review = {
+        let review = {
             user: userId.toString(),
             username: req.session.user.username,
             text: reviewText,
@@ -432,12 +383,12 @@ router.post('/art/:id/deletereview', async (req, res) => {
         return;
     }
     try {
-        const artworkId = req.params.id;
-        const userId = req.session.user._id;
-        const reviewTextToDelete = req.body.reviewText; // Assuming you pass the review text in the request body
+        let artworkId = req.params.id;
+        let userId = req.session.user._id;
+        let reviewTextToDelete = req.body.reviewText; // Assuming you pass the review text in the request body
 
         // Find the artwork
-        const artwork = await Artwork.findById(artworkId);
+        let artwork = await Artwork.findById(artworkId);
 
         // Check if the artwork exists
         if (!artwork) {
@@ -446,7 +397,7 @@ router.post('/art/:id/deletereview', async (req, res) => {
         }
 
         // Find the index of the review in the artwork's reviews array
-        const reviewIndex = artwork.reviews.findIndex(
+        let reviewIndex = artwork.reviews.findIndex(
             review => review.user === userId.toString() && review.text === reviewTextToDelete
         );
 
@@ -470,11 +421,57 @@ router.post('/art/:id/deletereview', async (req, res) => {
 });
 
 
-module.exports = router;
+router.get('/search', async (req, res) => {
+  if(!(req.session.user))
+    {
+        res.redirect("/account/login");
+        return;
+    }
+  try {
+
+    let page = parseInt(req.query.page) || 1;
+    let perPage = 10;
+    let skip = (page - 1) * perPage;
+
+    let searchResults = await Artwork.find(globalSearchCriteria).skip(skip).limit(perPage);
+
+    let totalArtworks = await Artwork.countDocuments(globalSearchCriteria);
+    let totalPages = Math.ceil(totalArtworks / perPage);
+
+    res.render('search', { searchResults, totalPages, currentPage: page, session: req.session });
+  } catch (error) {
+    console.error('Error rendering search page:', error);
+    res.status(500).send('Internal Se rver Error');
+  }
+});
 
 
+router.post('/search', async (req, res) => {
+  if(!(req.session.user))
+    {
+        res.redirect("/account/login");
+        return;
+    }
+  try {
+    let searchInput = req.body.searchInput.toLowerCase();
 
+    globalSearchCriteria = {
+      $or: [
+        { Title: { $regex: searchInput, $options: 'i' } },
+        { Artist: { $regex: searchInput, $options: 'i' } },
+        { Category: { $regex: searchInput, $options: 'i' } },
+        { Medium: { $regex: searchInput, $options: 'i' } }
+      ]
+    };
 
+    res.redirect("/main/search");
+  } catch (error) {
+    console.error('Error during search:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+ 
+ 
 
 
 module.exports = router;

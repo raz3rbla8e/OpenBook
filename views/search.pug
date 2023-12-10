@@ -8,24 +8,38 @@ body
 
   form(action="/main/search", method="POST")
     label(for="searchInput") Search:
-    input(type="text", name="searchInput", required)
+    input(type="text", name="searchInput")
 
     button(type="submit") Search
 
+    div
+        if searchResults.length > 0
+            h2 Search Results
 
-    if searchResults.length > 0
-        h2 Search Results
-        ul
-            each artwork in searchResults
-                li
-                    a(href=`/main/art/${artwork._id}`) #{artwork.Title} by #{artwork.Artist}
+            div.pagination
+                if currentPage > 1
+                    a(href=`/main/search?page=${currentPage - 1}`) Previous
+                span.page-info Page #{currentPage} of #{totalPages}
+                if currentPage < totalPages
+                    a(href=`/main/search?page=${currentPage + 1}`) Next
+                    
+            ul.artworks
+                each artwork in searchResults
+                    //- li
+                    //-     a(href=`/main/art/${artwork._id}`) #{artwork.Title} by #{artwork.Artist}
+                    div.artwork-container
+                        div
+                        a #{artwork.Artist}
+                        a(href=`/main/art/${artwork._id}`)
+                            img(class='artwork-image', src=artwork.Poster, alt=artwork.Title)
 
-        // Pagination
-        div.pagination
-            if currentPage > 1
-                a(href=`/main/search?page=${currentPage - 1}`) Previous
-            span.page-info Page #{currentPage} of #{totalPages}
-            if currentPage < totalPages
-                a(href=`/main/search?page=${currentPage + 1}`) Next
-    else
-        p No results found.
+
+            // Pagination
+            div.pagination
+                if currentPage > 1
+                    a(href=`/main/search?page=${currentPage - 1}`) Previous
+                span.page-info Page #{currentPage} of #{totalPages}
+                if currentPage < totalPages
+                    a(href=`/main/search?page=${currentPage + 1}`) Next
+        else
+            p No results found.
