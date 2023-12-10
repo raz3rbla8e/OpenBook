@@ -5,6 +5,8 @@ const User = require('./userModel');
 const mongoose = require('mongoose');
 
 
+let globalSearchCriteria = {}
+
 
 router.get("/home", async function (req, res) {
 
@@ -40,49 +42,54 @@ router.get("/home", async function (req, res) {
 router.get('/search', async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1;
+    const perPage = 10;
+    const skip = (page - 1) * perPage;
 
-    res.render('search', { searchResults: [], totalPages: 1, currentPage: page, session: req.session});
+    const searchResults = await Artwork.find(globalSearchCriteria)
+      .skip(skip)
+      .limit(perPage);
+
+    const totalArtworks = await Artwork.countDocuments(globalSearchCriteria);
+    const totalPages = Math.ceil(totalArtworks / perPage);
+
+    res.render('search', { searchResults, totalPages, currentPage: page, session: req.session });
   } catch (error) {
     console.error('Error rendering search page:', error);
     res.status(500).send('Internal Server Error');
   }
 });
 
+
 router.post('/search', async (req, res) => {
   try {
-    const searchInput = req.body.searchInput.toLowerCase(); // Convert to lowercase for case-insensitive search
+    const searchInput = req.body.searchInput.toLowerCase();
     const page = parseInt(req.query.page) || 1;
-    const skip = (page - 1) * 10;
+    const perPage = 10;
+    const skip = (page - 1) * perPage;
 
-    // Example: Search by Title, Artist, Category, and Medium
-    const searchResults = await Artwork.find({
+    globalSearchCriteria = {
       $or: [
         { Title: { $regex: searchInput, $options: 'i' } },
         { Artist: { $regex: searchInput, $options: 'i' } },
         { Category: { $regex: searchInput, $options: 'i' } },
         { Medium: { $regex: searchInput, $options: 'i' } }
       ]
-    })
+    };
+
+    const searchResults = await Artwork.find(globalSearchCriteria)
       .skip(skip)
-      .limit(10);
+      .limit(perPage);
 
-    // Calculate total number of pages
-    const totalArtworks = await Artwork.countDocuments({
-      $or: [
-        { Title: { $regex: searchInput, $options: 'i' } },
-        { Artist: { $regex: searchInput, $options: 'i' } },
-        { Category: { $regex: searchInput, $options: 'i' } },
-        { Medium: { $regex: searchInput, $options: 'i' } }
-      ]
-    });
-    const totalPages = Math.ceil(totalArtworks / 10);
+    const totalArtworks = await Artwork.countDocuments(globalSearchCriteria);
+    const totalPages = Math.ceil(totalArtworks / perPage);
 
-    res.render('search', { searchResults, totalPages, currentPage: page , session: req.session });
+    res.render('search', { searchResults, totalPages, currentPage: page, session: req.session });
   } catch (error) {
     console.error('Error during search:', error);
     res.status(500).send('Internal Server Error');
   }
 });
+
 
 
 

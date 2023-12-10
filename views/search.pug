@@ -12,22 +12,20 @@ body
 
     button(type="submit") Search
 
-  // Display search results
-  if searchResults.length > 0
-    h2 Search Results
-    ul
-      each artwork in searchResults
-        li
-          a(href=`/main/art/${artwork._id}`) #{artwork.Title} by #{artwork.Artist}
 
-  else
-    p No results found.
+    if searchResults.length > 0
+        h2 Search Results
+        ul
+            each artwork in searchResults
+                li
+                    a(href=`/main/art/${artwork._id}`) #{artwork.Title} by #{artwork.Artist}
 
-  // Pagination
-  if totalPages > 1
-    div.pagination
-      if currentPage > 1
-        a(href=`/main/search?page=${currentPage - 1}`) Previous
-      span.page-info Page #{currentPage} of #{totalPages}
-      if currentPage < totalPages
-        a(href=`/main/search?page=${currentPage + 1}`) Next
+        // Pagination
+        div.pagination
+            if currentPage > 1
+                a(href=`/main/search?page=${currentPage - 1}`) Previous
+            span.page-info Page #{currentPage} of #{totalPages}
+            if currentPage < totalPages
+                a(href=`/main/search?page=${currentPage + 1}`) Next
+    else
+        p No results found.
