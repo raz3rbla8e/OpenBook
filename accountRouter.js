@@ -111,6 +111,23 @@ router.get("/dashboard", async (req, res) => {
                 const artists = await User.find({ _id: { $in: artistIds } });
 
                 req.session.user.following = artists;
+
+                req.session.user.reviews = [];
+
+                const userReviews = await Artwork.find({ 'reviews.user': req.session.user._id });
+
+                for(let review of userReviews){
+                    req.session.user.reviews.push(
+                        {
+                            artwork: review.Title,
+                            artworkid: review._id.toString(),
+                            text: review.reviews.find(rev => rev.user === req.session.user._id.toString()).text
+                        }
+                    )
+                }
+                
+                console.log(req.session.reviews);
+
                 res.render("dashboard", { session: req.session, artworks: artworksobj });
             } else {
                 // Handle the case where the user object is not found
@@ -203,7 +220,7 @@ router.post("/switch", async (req, res) => {
                     if (!title || !artist || !year || !category || !medium || !description || !poster) {
                         res.render("switch", { error: true, errortype: 'Please fill in all fields', session: req.session })
                     }
-                    console.log(title, artist, year, category, medium, description, poster);
+                    
                     let artwork = new Artwork({
                         Title: title,
                         Artist: artist,

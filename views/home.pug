@@ -5,6 +5,8 @@ head
 
 body
   include ./partials/header
+  if(session.user.type == "artist")
+    include ./partials/artistheaders
   h1 Home
   if artworks && artworks.length > 0
     each artwork in artworks

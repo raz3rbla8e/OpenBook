@@ -6,6 +6,8 @@ html
 
   body
     include ./partials/header
+    if(session.user.type == "artist")
+      include ./partials/artistheaders
     h1 #{user.username}'s Profile
     p #{user.username} is a #{user.type}.
     if user.followedBy && user.followedBy.length > 0
@@ -19,7 +21,19 @@ html
         form(action=`/main/user/${user._id}/follow`, method="POST")
             button(type="submit") Follow user
         p You are not following this user.
-        
+    
+
+    if session.user.reviews && session.user.reviews.length > 0
+        h2 Your Reviews
+        ul
+          each review in session.user.reviews
+            li= review.text
+            form(action=`/main/user/${review.artist}/review`, method="POST")
+              input(type="hidden" name="reviewId" value=review._id)
+              button(type="submit") Remove Review
+    else
+        p You have not made any reviews.
+
     if user.type === "artist"
         if user.artworks && user.artworks.length > 0
             h2 #{user.username} has created the following artworks:

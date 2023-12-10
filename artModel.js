@@ -1,5 +1,22 @@
-const mongoose = require('mongoose');
+// const mongoose = require('mongoose');
 
+
+// const artworkSchema = new mongoose.Schema({
+//     Title: String,
+//     Artist: String,
+//     Year: String,
+//     Category: String,
+//     Medium: String,
+//     Description: String,
+//     Poster: String,
+//     artlikes: [],
+//     reviews: [],
+// });
+
+
+// const Artwork = mongoose.model('Artwork', artworkSchema);
+// module.exports = Artwork;
+const mongoose = require('mongoose');
 
 const artworkSchema = new mongoose.Schema({
     Title: String,
@@ -9,9 +26,15 @@ const artworkSchema = new mongoose.Schema({
     Medium: String,
     Description: String,
     Poster: String,
-    artlikes: []
+    artlikes: [],
+    reviews: [
+        {
+            user: { type: String },
+            username: { type: String },
+            text: String,
+        }
+    ],
 });
-
 
 const Artwork = mongoose.model('Artwork', artworkSchema);
 module.exports = Artwork;

@@ -14,7 +14,7 @@ router.get("/home", async function (req, res) {
                 { $sample: { size: 5 } }
             ]);
 
-            res.render("home", { artworks: randomArtworks });
+            res.render("home", { artworks: randomArtworks, session: req.session});
         } catch (error) {
             console.error('Error fetching random artworks:', error);
             res.status(500).send('Internal Server Error');
@@ -116,7 +116,8 @@ router.post("/art/:id/unlike", async (req, res) => {
             artwork.artlikes = artwork.artlikes.filter(id => id !== userid.toString());
             await artwork.save();
 
-            res.redirect(`/main/art/${artworkid}`);
+            res.redirect('back');
+
         }
         catch (error) {
             console.error('Error fetching artwork:', error);
@@ -183,15 +184,15 @@ router.post("/user/:id/unfollow", async (req, res) => {
                 return;
             }
 
-          
+
             user.following = user.following.filter(id => id.toString() !== artistid.toString());
             await user.save();
 
-            
+
             artist.followedBy = artist.followedBy.filter(id => id.toString() !== userid.toString());
             await artist.save();
 
-            res.redirect(`/main/user/${artistid}`);
+            res.redirect('back');
         } catch (error) {
             console.error('Error unfollowing artist:', error);
             res.status(500).send('Internal Server Error');
@@ -237,6 +238,79 @@ router.get("/user/:id", async (req, res) => {
     res.render("user", { user: user, session: req.session, artlist: listofart, following: following })
 
 });
+
+
+
+
+router.post('/art/:id/review', async (req, res) => {
+    try {
+        const artworkId = req.params.id;
+        const userId = req.session.user._id;
+        const reviewText = req.body.review;
+
+        const user = await User.findById(userId);
+        // Fetch the artwork
+        const artwork = await Artwork.findById(artworkId);
+
+        // Create the review
+        const review = {
+            user: userId.toString(),
+            username: req.session.user.username,
+            text: reviewText,
+        };
+
+        artwork.reviews.push(review);
+        await artwork.save();
+
+        res.redirect(`/main/art/${artworkId}`);
+    } catch (error) {
+        console.error('Error creating review:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+router.post('/art/:id/deletereview', async (req, res) => {
+    try {
+        const artworkId = req.params.id;
+        const userId = req.session.user._id;
+        const reviewTextToDelete = req.body.reviewText; // Assuming you pass the review text in the request body
+
+        // Find the artwork
+        const artwork = await Artwork.findById(artworkId);
+
+        // Check if the artwork exists
+        if (!artwork) {
+            res.status(404).send('Artwork not found');
+            return;
+        }
+
+        // Find the index of the review in the artwork's reviews array
+        const reviewIndex = artwork.reviews.findIndex(
+            review => review.user === userId.toString() && review.text === reviewTextToDelete
+        );
+
+        // Check if the review exists
+        if (reviewIndex === -1) {
+            res.status(404).send('Review not found');
+            return;
+        }
+
+        // Remove the review from the artwork's reviews array
+        artwork.reviews.splice(reviewIndex, 1);
+
+        // Save the updated artwork
+        await artwork.save();
+
+        res.redirect("back");
+    } catch (error) {
+        console.error('Error deleting review:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+
+module.exports = router;
+
 
 
 
