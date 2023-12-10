@@ -36,21 +36,11 @@ router.get("/home", async function (req, res) {
 
 });
 
-// router.get("/search", async function (req, res) {
-//     if(req.session.user)
-//     {
-//         let searchResults = [];
-//         res.render("search", { session: req.session, searchResults: searchResults });
-//     }
-//     else
-//     {
-//         res.redirect("/account/login");
-//     }
-    
-//  });
+
 router.get('/search', async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1;
+
     res.render('search', { searchResults: [], totalPages: 1, currentPage: page, session: req.session});
   } catch (error) {
     console.error('Error rendering search page:', error);
@@ -93,6 +83,7 @@ router.post('/search', async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 });
+
 
 
 router.get("/addArt", async function (req, res) {
