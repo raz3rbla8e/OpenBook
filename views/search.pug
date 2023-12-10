@@ -1,0 +1,32 @@
+head
+  title Search Artworks
+  link(rel="stylesheet" href="/styles.css")
+
+body
+  include ./partials/header
+  h1 Search Artworks
+
+  form(action="/search", method="POST")
+    label(for="searchInput") Search:
+    input(type="text", name="searchInput", required)
+
+    button(type="submit") Search
+
+  // Display search results
+  if searchResults.length > 0
+    h2 Search Results
+    ul
+      each artwork in searchResults
+        li
+          a(href=`/art/${artwork._id}`) #{artwork.Title} by #{artwork.Artist}
+  else
+    p No results found.
+
+  // Pagination
+  if totalPages > 1
+    div.pagination
+      if currentPage > 1
+        a(href=`/search?page=${currentPage - 1}`) Previous
+      span.page-info Page #{currentPage} of #{totalPages}
+      if currentPage < totalPages
+        a(href=`/search?page=${currentPage + 1}`) Next

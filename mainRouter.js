@@ -36,6 +36,31 @@ router.get("/home", async function (req, res) {
 
 });
 
+// router.get("/search", async function (req, res) {
+//     if(req.session.user)
+//     {
+//         let searchResults = [];
+//         res.render("search", { session: req.session, searchResults: searchResults });
+//     }
+//     else
+//     {
+//         res.redirect("/account/login");
+//     }
+    
+//  });
+router.get('/search', async (req, res) => {
+  try {
+    const page = parseInt(req.query.page) || 1;
+    const skip = (page - 1) * ITEMS_PER_PAGE;
+
+    res.render('search', { searchResults: [], totalPages: 1, currentPage: page });
+  } catch (error) {
+    console.error('Error rendering search page:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+
 
 router.get("/addArt", async function (req, res) {
     if(req.session.user)
@@ -50,6 +75,11 @@ router.get("/addArt", async function (req, res) {
 });
 
 router.post('/addArt', async (req, res) => {
+    if(!(req.session.user))
+    {
+        res.redirect("/account/login");
+        return;
+    }
     try {
         // Extract artwork information from the request body
         let { title, year, category, medium, description, poster } = req.body;
@@ -101,7 +131,7 @@ router.post('/addArt', async (req, res) => {
 router.get("/art/:id", async function (req, res) {
     if (req.session.user) {
         try {
-            // Check if the provided ID is a valid ObjectId
+
             if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
                 res.status(404).send('Not Found');
                 return;
@@ -278,6 +308,10 @@ router.post("/user/:id/unfollow", async (req, res) => {
 
 
 router.get("/user/:id", async (req, res) => {
+    if (!req.session.user) {
+        res.redirect("/account/login");
+        return;
+    }
     let userid = req.params.id;
 
     if (userid === req.session.user._id.toString()) {
@@ -329,6 +363,11 @@ router.get("/user/:id", async (req, res) => {
 
 
 router.post('/art/:id/review', async (req, res) => {
+    if(!(req.session.user))
+    {
+        res.redirect("/account/login");
+        return;
+    }
     try {
         const artworkId = req.params.id;
         const userId = req.session.user._id;
@@ -356,6 +395,11 @@ router.post('/art/:id/review', async (req, res) => {
 });
 
 router.post('/art/:id/deletereview', async (req, res) => {
+    if(!(req.session.user))
+    {
+        res.redirect("/account/login");
+        return;
+    }
     try {
         const artworkId = req.params.id;
         const userId = req.session.user._id;

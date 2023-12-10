@@ -190,6 +190,7 @@ router.get("/switch", async (req, res) => {
 });
 
 router.post("/switch", async (req, res) => {
+    
     try {
         if (req.session.user) {
             if (req.session.user.type === "patron") {
