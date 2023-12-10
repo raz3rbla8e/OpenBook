@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Artwork = require('./artModel');
 const User = require('./userModel');
+const mongoose = require('mongoose');
 
 
 
@@ -98,17 +99,22 @@ router.post('/addArt', async (req, res) => {
 
 
 router.get("/art/:id", async function (req, res) {
-
     if (req.session.user) {
         try {
+            // Check if the provided ID is a valid ObjectId
+            if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+                res.status(404).send('Not Found');
+                return;
+            }
+
             const artwork = await Artwork.findById(req.params.id);
 
             if (!artwork) {
                 res.status(404).send('Not Found');
                 return;
             }
-            let username = artwork.Artist;
 
+            let username = artwork.Artist;
             let user = await User.findOne({ username: username });
 
             if (user) {
@@ -120,8 +126,7 @@ router.get("/art/:id", async function (req, res) {
             console.error('Error fetching artwork:', error);
             res.status(500).send('Internal Server Error');
         }
-    }
-    else {
+    } else {
         res.redirect("/account/login");
     }
 });
