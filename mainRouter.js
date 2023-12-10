@@ -247,6 +247,21 @@ router.get("/user/:id", async (req, res) => {
         listofart.push(art);
     }
 
+    let reviews = [];
+
+    const theirReviews = await Artwork.find({ 'reviews.user':user._id });
+
+    for(let review of theirReviews)
+    {
+        reviews.push({
+            artwork: review.Title,
+            artworkid: review._id.toString(),
+            text: review.reviews.find(rev => rev.user === user._id.toString()).text
+        })
+    }
+
+    console.log(reviews);
+
 
 
     let following = false;
@@ -256,7 +271,7 @@ router.get("/user/:id", async (req, res) => {
 
 
 
-    res.render("user", { user: user, session: req.session, artlist: listofart, following: following })
+    res.render("user", { user: user, session: req.session, artlist: listofart, following: following, reviews: reviews });
 
 });
 

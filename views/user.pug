@@ -20,15 +20,13 @@ html
             button(type="submit") Follow user
         p You are not following this user.
     
-
-    if session.user.reviews && session.user.reviews.length > 0
-        h2 Your Reviews
+    if reviews && reviews.length > 0
+        h2 Their Reviews
         ul
-          each review in session.user.reviews
-            li= review.text
-            form(action=`/main/user/${review.artist}/review`, method="POST")
-              input(type="hidden" name="reviewId" value=review._id)
-              button(type="submit") Remove Review
+          each review in reviews
+            li
+                a(href=`/main/art/${review.artworkid}`)= review.artwork
+                span : #{review.text}
     else
         p You have not made any reviews.
 
