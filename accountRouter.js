@@ -127,6 +127,8 @@ router.get("/dashboard", async (req, res) => {
                 }
 
                 req.session.user.workshops = user.workshops
+
+                
                 let participatingWorkshops = await User.find({ 'workshops.participants': req.session.user.username });
                 req.session.user.participatingWorkshops = [];
 
