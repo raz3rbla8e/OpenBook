@@ -260,9 +260,6 @@ router.get("/user/:id", async (req, res) => {
         })
     }
 
-    console.log(reviews);
-
-
 
     let following = false;
     if (user.followedBy.map(id => id.toString()).includes(req.session.user._id.toString())) {

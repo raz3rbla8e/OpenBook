@@ -125,8 +125,6 @@ router.get("/dashboard", async (req, res) => {
                         }
                     )
                 }
-                
-                console.log(req.session.reviews);
 
                 res.render("dashboard", { session: req.session, artworks: artworksobj });
             } else {
