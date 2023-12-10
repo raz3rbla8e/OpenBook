@@ -3,15 +3,24 @@ head
   link(rel="stylesheet" href="/styles.css")
 
 body
-  include ./partials/header
-  h1 Home
-  if artworks && artworks.length > 0
-    each artwork in artworks
-      div.artwork-container
-        div.artist-info
-          a #{artwork.Artist}
-        a(href=`/main/art/${artwork._id}`)
-          img(class='artwork-image', src=artwork.Poster, alt=artwork.Title)
-        
-  else
-    p No artworks available.
+    include ./partials/header
+    h1 Home
+    div.artworks
+        if artworks && artworks.length > 0
+            each artwork in artworks
+                div.artwork-container
+                    div.artist-info
+                    a #{artwork.Artist}
+                    a(href=`/main/art/${artwork._id}`)
+                        img(class='artwork-image', src=artwork.Poster, alt=artwork.Title)
+
+            // Pagination links
+            div.pagination
+                if currentPage > 1
+                    a(href=`/main/home?page=${currentPage - 1}`) Previous
+                span.page-info Page #{currentPage} of #{totalPages}
+                if currentPage < totalPages
+                    a(href=`/main/home?page=${currentPage + 1}`) Next
+
+        else
+            p No artworks available.

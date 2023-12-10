@@ -1,0 +1,31 @@
+head
+  title Add Artwork
+  link(rel="stylesheet" href="/styles.css")
+
+body
+  include ./partials/header
+  h1 Add Artwork
+
+  form(action="/main/addArt", method="POST")
+    label(for="title") Title:
+    input(type="text", name="title", required)
+
+    label(for="artist") Artist:
+    input(type="text", name="artist", required)
+
+    label(for="year") Year:
+    input(type="text", name="year", required)
+
+    label(for="category") Category:
+    input(type="text", name="category", required)
+
+    label(for="medium") Medium:
+    input(type="text", name="medium", required)
+
+    label(for="description") Description:
+    textarea(name="description", required)
+
+    label(for="poster") Poster URL:
+    input(type="text", name="poster", required)
+
+    button(type="submit") Add Art

@@ -9,12 +9,21 @@ router.get("/home", async function (req, res) {
 
     if (req.session.user) {
         try {
-            // Fetch 5 random artworks from the database
-            const randomArtworks = await Artwork.aggregate([
-                { $sample: { size: 5 } }
-            ]);
 
-            res.render("home", { artworks: randomArtworks, session: req.session});
+            
+            let allart = await Artwork.find();
+
+            let pageSize = 5;
+            let totalPages = Math.ceil(allart.length / pageSize);
+            let currentPage = parseInt(req.query.page) || 1;
+            let startIndex = (currentPage - 1) * pageSize;
+            let endIndex = startIndex + pageSize;
+
+            // Send only the artworks for the current page
+            const artworksForPage = allart.slice(startIndex, endIndex);
+
+            // Render the Pug file with the artworks for the current page
+            res.render('home', { artworks: artworksForPage, totalPages, currentPage, session: req.session });
         } catch (error) {
             console.error('Error fetching random artworks:', error);
             res.status(500).send('Internal Server Error');
@@ -24,6 +33,19 @@ router.get("/home", async function (req, res) {
         res.redirect("/account/login");
     }
 
+});
+
+
+router.get("/addArt", async function (req, res) {
+    if(req.session.user)
+    {
+        res.render("addArt", {session : req.session});
+    }
+    else
+    {
+        res.redirect("/account/login");
+    
+    }
 });
 
 
@@ -42,7 +64,6 @@ router.get("/art/:id", async function (req, res) {
             let user = await User.findOne({ username: username });
 
             if (user) {
-                // let userid = user._id;
                 res.render("art", { artwork: artwork, session: req.session, user: user });
             } else {
                 res.status(404).send('User not found');
