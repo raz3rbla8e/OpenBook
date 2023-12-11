@@ -4,29 +4,39 @@ html
     link(rel="stylesheet", href="/styles.css")
     script(src="/client.js")
 
-
-body 
+body
     include ./partials/header
-    h1 Workshop Details
+    h1#workshop-title Workshop Details
+
     if workshop
-        p Title: #{workshop.title}
-        p Host:
-            a(href=`/user/${workshop.hostid}`)= workshop.host
-        p Location: #{workshop.location}
-        p Date: #{workshop.date}
-        if workshop.participants && workshop.participants.length > 0
-            h3 Participants
-            ul
-                each participant in workshop.participants
-                    li= participant
-        else
-        p No participants yet.
+        div#workshop-details
+            ul#workshop-info
+                li
+                    strong Title:   
+                    span= workshop.title
+                li
+                    strong Host:    
+                    a#host-link(href=`/user/${workshop.hostid}`)= workshop.host
+                li
+                    strong Location:    
+                    span= workshop.location
+                li
+                    strong Date:    
+                    span= workshop.date
 
-        if (session.user && workshop.host !== session.user.username && (!workshop.participants || !workshop.participants.includes(session.user.username)))
-            button(type="button", onclick=`joinWorkshop('${workshop._id}')`) Join Workshop
+            if workshop.participants && workshop.participants.length > 0
+                h3#participants-header Participants
+                ul#participants-list
+                    each participant in workshop.participants
+                        li#participant= participant
+            else
+                p#participants-info No participants yet.
 
-        if (session.user && workshop.participants && workshop.participants.includes(session.user.username))
-            button(type="button", onclick=`leaveWorkshop('${workshop._id}')`) Leave Workshop
+            if (session.user && workshop.host !== session.user.username && (!workshop.participants || !workshop.participants.includes(session.user.username)))
+                button#join-button(type="button", onclick=`joinWorkshop('${workshop._id}')`) Join Workshop
+
+            if (session.user && workshop.participants && workshop.participants.includes(session.user.username))
+                button#leave-button(type="button", onclick=`leaveWorkshop('${workshop._id}')`) Leave Workshop
 
     else
-        p Workshop not found
+        p#workshop-not-found Workshop not found

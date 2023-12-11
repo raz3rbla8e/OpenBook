@@ -13,7 +13,7 @@ router.post("/:id/follow", async (req, res) => {
             let artistid = req.params.id;
             // Validating artist id
             if(mongoose.Types.ObjectId.isValid(artistid) === false) {
-                return res.redirect("/");
+                return res.status(400).send("Invalid artist id");
             }
             let userid = req.session.user._id;
 
@@ -23,8 +23,7 @@ router.post("/:id/follow", async (req, res) => {
 
             // Checking if user is already following the artist
             if (user.following.includes(artist._id)) {
-                res.redirect(`/user/${artistid}`);
-                return;
+                return res.status(409).send("User is already following the artist");
             }
 
             // Adding artist id to user's following list
@@ -35,7 +34,7 @@ router.post("/:id/follow", async (req, res) => {
             artist.followedBy.push(user._id.toString());
             await artist.save();
 
-            res.redirect(`/user/${artistid}`);
+            res.status(200).redirect(`/user/${artistid}`);
         }
         catch (error) {
             console.error('Error fetching artwork:', error);
@@ -44,7 +43,7 @@ router.post("/:id/follow", async (req, res) => {
 
     }
     else {
-        res.redirect("/account/login");
+        res.status(401).redirect("/account/login");
     }
 });
 
@@ -56,7 +55,7 @@ router.post("/:id/unfollow", async (req, res) => {
             let artistid = req.params.id;
             // Validating artist id
             if(mongoose.Types.ObjectId.isValid(artistid) === false) {
-                return res.redirect("/");
+                return res.status(400).send("Invalid artist id");
             }
             let userid = req.session.user._id;
 
@@ -66,8 +65,7 @@ router.post("/:id/unfollow", async (req, res) => {
 
             // Checking if user is not following the artist
             if (!user.following.includes(artistid)) {
-                res.redirect(`/user/${artistid}`);
-                return;
+                return res.status(409).send("User is not following the artist");
             }
 
             // Removing artist id from user's following list
@@ -78,13 +76,13 @@ router.post("/:id/unfollow", async (req, res) => {
             artist.followedBy = artist.followedBy.filter(id => id.toString() !== userid.toString());
             await artist.save();
 
-            res.redirect('back');
+            res.status(200).redirect('back');
         } catch (error) {
             console.error('Error unfollowing artist:', error);
             res.status(500).send('Internal Server Error');
         }
     } else {
-        res.redirect("/account/login");
+        res.status(401).redirect("/account/login");
     }
 });
 
@@ -92,19 +90,17 @@ router.post("/:id/unfollow", async (req, res) => {
 router.get("/:id", async (req, res) => {
     // Checking if user is logged in
     if (!req.session.user) {
-        res.redirect("/account/login");
-        return;
+        return res.status(401).redirect("/account/login");
     }
     let userid = req.params.id;
     // Validating user id
     if(mongoose.Types.ObjectId.isValid(userid) === false) {
-        return res.redirect("/");
+        return res.status(400).send("Invalid user id");
     }
 
     // Redirecting to user's dashboard if accessing own profile
     if (userid === req.session.user._id.toString()) {
-        res.redirect("/account/dashboard");
-        return;
+        return res.status(302).redirect("/account/dashboard");
     }
 
     // Finding user by id
@@ -112,8 +108,7 @@ router.get("/:id", async (req, res) => {
 
     // Checking if user exists
     if (!user) {
-        res.status(404).send('Not Found');
-        return;
+        return res.status(404).send('Not Found');
     }
 
     let artworkids = user.artworks;

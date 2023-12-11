@@ -133,4 +133,782 @@ a:visited{
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
+/* DASHBOARD STUFF */
+#dashboard-content {
+    max-width: 800px;
+    /* Adjust the max-width as needed */
+    margin: 20px auto;
+    /* Center the content */
+    padding: 20px;
+    background-color: #333;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
 
+#dashboard-content h1 {
+    color: #3498db;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.user-info p {
+    margin-bottom: 10px;
+}
+
+.standalone {
+    color: #3498db;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.standalone:hover {
+    text-decoration: underline;
+}
+
+.following-info ul,
+.followedby-info ul,
+.reviews-info ul,
+.likes-info ul,
+.artworks-info ul,
+.workshops-info ul,
+.participating-workshops-info ul {
+    list-style: none;
+    padding: 0;
+}
+
+.following-info li,
+.followedby-info li,
+.reviews-info li,
+.likes-info li,
+.artworks-info li,
+.workshops-info li,
+.participating-workshops-info li {
+    margin-bottom: 10px;
+}
+
+.following-info li a,
+.followedby-info li a,
+.reviews-info li a,
+.likes-info li a,
+.artworks-info li a,
+.workshops-info li a,
+.participating-workshops-info li a {
+    color: #3498db;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.following-info form,
+.reviews-info form,
+.likes-info form {
+    display: inline;
+    margin-left: 10px;
+}
+
+.following-info button,
+.reviews-info button,
+.likes-info button {
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.following-info button:hover,
+.reviews-info button:hover,
+.likes-info button:hover {
+    background-color: #c0392b;
+}
+
+.logout-section a,
+.notification-link {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-top: 20px;
+    text-align: center;
+    text-decoration: none;
+    color: #fff;
+    border-radius: 4px;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.logout-section a {
+    background-color: #e74c3c;
+}
+
+.logout-section a:hover {
+    background-color: #c0392b;
+}
+
+.notification-link {
+    background-color: #3498db;
+}
+
+.notification-link:hover {
+    background-color: #2980b9;
+}
+
+/* Art Details Styles */
+#art-details-content {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #333;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#art-details-content h1 {
+    color: #3498db;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.artwork-info {
+    list-style: none;
+    padding: 0;
+}
+
+.artwork-info li {
+    margin-bottom: 10px;
+}
+
+.artwork-info li strong {
+    color: #3498db;
+}
+
+.artwork-info li a,
+.artwork-info li span {
+    color: #fff;
+    font-weight: bold;
+}
+
+#reviews {
+    margin-top: 20px;
+}
+
+#reviews h2 {
+    color: #3498db;
+}
+
+#reviews ul {
+    list-style: none;
+    padding: 0;
+}
+
+#reviews li {
+    margin-bottom: 10px;
+}
+
+#reviews li a {
+    color: #3498db;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+#reviews span {
+    color: #fff;
+}
+
+#reviews form {
+    display: inline;
+    margin-left: 10px;
+}
+
+#reviews button {
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#reviews button:hover {
+    background-color: #c0392b;
+}
+
+#artrate {
+    margin-top: 20px;
+}
+
+#artrate form {
+    margin-top: 10px;
+}
+
+#artrate label {
+    color: #3498db;
+    font-weight: bold;
+}
+
+#artrate input {
+    width: 100%;
+    padding: 5px;
+    margin-top: 5px;
+    box-sizing: border-box;
+}
+
+#artrate button {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#artrate button:hover {
+    background-color: #2980b9;
+}
+
+#artrate p {
+    color: #fff;
+    margin-top: 10px;
+}
+
+#artrate form button[type="submit"] {
+    background-color: #3498db;
+}
+
+#artrate form button[type="submit"]:hover {
+    background-color: #2980b9;
+}
+
+#artrate form button[type="submit"]:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+#artrate form button[type="submit"]:disabled:hover {
+    background-color: #ccc;
+}
+
+#artrate p {
+    color: #fff;
+}
+
+#artrate p.like-count {
+    margin-top: 10px;
+}
+
+
+
+/*USER PAGE*/
+#profile-content {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #333;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#profile-content h1 {
+    color: #3498db;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#user-reviews,
+#user-artworks,
+#user-workshops {
+    list-style: none;
+    padding: 0;
+}
+
+#user-reviews li,
+#user-artworks li,
+#user-workshops li {
+    margin-bottom: 10px;
+}
+
+#user-reviews li a,
+#user-artworks li a,
+#user-workshops li a,
+#user-reviews li span,
+#user-artworks li span,
+#user-workshops li span {
+    color: #3498db;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+#user-reviews li a:hover,
+#user-artworks li a:hover,
+#user-workshops li a:hover {
+    text-decoration: underline;
+}
+
+#profile-content p {
+    color: #fff;
+    margin-top: 10px;
+}
+
+#profile-content button {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#profile-content button:hover {
+    background-color: #2980b9;
+}
+
+/*addart*/
+#add-artwork-content {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #333;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#add-artwork-title {
+    color: #3498db;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#add-artwork-form {
+    display: flex;
+    flex-direction: column;
+}
+
+#add-artwork-form label {
+    color: #fff;
+    margin-top: 10px;
+}
+
+#add-artwork-form input,
+#add-artwork-form textarea {
+    width: 100%;
+    padding: 5px;
+    margin-top: 5px;
+    box-sizing: border-box;
+}
+
+#add-art-button {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+#add-art-button:hover {
+    background-color: #2980b9;
+}
+
+#error-message {
+    color: red;
+}
+
+/*addwork*/
+#add-workshop-content {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #333;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#add-workshop-title {
+    color: #3498db;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#add-workshop-form {
+    display: flex;
+    flex-direction: column;
+}
+
+#add-workshop-form label {
+    color: #fff;
+    margin-top: 10px;
+}
+
+#add-workshop-form input {
+    width: 100%;
+    padding: 5px;
+    margin-top: 5px;
+    box-sizing: border-box;
+}
+
+#save-button {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+#save-button:hover {
+    background-color: #2980b9;
+}
+
+
+/*workshop*/
+#workshop-title {
+    color: #3498db;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#workshop-details {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #333;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#workshop-info {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 20px;
+}
+
+#workshop-info li {
+    margin-bottom: 10px;
+}
+
+#workshop-info li strong {
+    color: #3498db;
+}
+
+#workshop-info li a,
+#workshop-info li span {
+    color: #fff;
+    font-weight: bold;
+}
+
+#participants-header {
+    color: #3498db;
+}
+
+#participants-list {
+    list-style: none;
+    padding: 0;
+}
+
+#participants-list li {
+    margin-bottom: 10px;
+}
+
+#join-button,
+#leave-button {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+#join-button:hover,
+#leave-button:hover {
+    background-color: #2980b9;
+}
+
+#workshop-not-found {
+    color: #fff;
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* SEARCH ARTWORKS PAGE */
+#search-artworks-title {
+    color: #3498db;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#search-form {
+    display: flex;
+    flex-direction: column;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+#searchInput {
+    width: 100%;
+    padding: 5px;
+    margin-top: 5px;
+    box-sizing: border-box;
+}
+
+#search-button {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+#search-button:hover {
+    background-color: #2980b9;
+}
+
+#search-results {
+    max-width: 800px;
+    margin: 20px auto;
+}
+
+#no-results {
+    color: #fff;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.artworks {
+    list-style: none;
+    padding: 0;
+}
+
+.artwork-container {
+    margin-bottom: 20px;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+}
+
+.artwork-container:hover {
+    transform: scale(1.05);
+}
+
+.artwork-container img {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    display: block;
+    margin: 20px auto;
+}
+
+.artwork-container a {
+    color: #3498db;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.pagination {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.pagination a {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 0 5px;
+    background-color: #3498db;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+}
+
+.pagination a:hover {
+    background-color: #2980b9;
+}
+
+/* SWITCH PAGE STYLES */
+#switch-title {
+    color: #3498db;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#switch-info {
+    color: #fff;
+    text-align: center;
+    margin-top: 20px;
+}
+
+#error {
+    color: red;
+}
+
+#switch-form {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #333;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+label {
+    color: #fff;
+    margin-top: 10px;
+}
+
+input,
+textarea {
+    width: 100%;
+    padding: 5px;
+    margin-top: 5px;
+    box-sizing: border-box;
+}
+
+#switch-button,
+#go-back-link {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+    text-decoration: none;
+}
+
+#switch-button:hover,
+#go-back-link:hover {
+    background-color: #2980b9;
+}
+
+/* LOGIN PAGE STYLES */
+#login-title {
+    color: #3498db;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#login-form {
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #333;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#username-label,
+#password-label {
+    color: #fff;
+    margin-top: 10px;
+}
+
+#username-input,
+#password-input {
+    width: 100%;
+    padding: 5px;
+    margin-top: 5px;
+    box-sizing: border-box;
+}
+
+#error {
+    color: red;
+}
+
+#login-button {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+#login-button:hover {
+    background-color: #2980b9;
+}
+
+#register-link {
+    color: #fff;
+    margin-top: 10px;
+    text-align: center;
+}
+
+#register-link a {
+    color: #3498db;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+#register-link a:hover {
+    text-decoration: underline;
+}
+
+/* REGISTER PAGE STYLES */
+#register-title {
+    color: #3498db;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#register-form {
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #333;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#username-label,
+#password-label {
+    color: #fff;
+    margin-top: 10px;
+}
+
+#username-input,
+#password-input {
+    width: 100%;
+    padding: 5px;
+    margin-top: 5px;
+    box-sizing: border-box;
+}
+
+#error {
+    color: red;
+}
+
+#register-button {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+#register-button:hover {
+    background-color: #2980b9;
+}
+
+#login-link {
+    color: #fff;
+    margin-top: 10px;
+    text-align: center;
+}
+
+#login-link a {
+    color: #3498db;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+#login-link a:hover {
+    text-decoration: underline;
+}

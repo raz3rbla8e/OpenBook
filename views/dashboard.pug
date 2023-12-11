@@ -5,90 +5,112 @@ html
 
   body
     include ./partials/header
-    h1 Dashboard
-    if session.user
-      p Welcome, #{session.user.username}!
-      p Your account type is: #{session.user.type}
-      a(class = "standalone",href="/main/notif") Notifications
-      if session.user.following && session.user.following.length > 0
-        p You are following the following users:
-          ul
-            each artist in session.user.following
-              li 
-                a(class = "standalone",href=`/user/${artist._id}`)= artist.username   
-                form(action=`/user/${artist._id}/unfollow`, method="POST", style="display: inline;")
-                  button(type="submit") Unfollow
-      else
-        p You are not following any users.
 
-      if session.user.followedby && session.user.followedby.length > 0
-        p You are followed by the following users:
-          ul
-            each patron in session.user.followedby
-              li 
-                a(class = "standalone",href=`/user/${patron._id}`)= patron.username
+    #dashboard-content
+      h1 Dashboard
+      if session.user
+        .user-info
+          p Welcome, #{session.user.username}!
+          p Your account type is: #{session.user.type}
+          .notification-link
+            a(class="standalone", href="/main/notif") Notifications
 
-      else
-        p You are not followed by any users.
+          if session.user.following && session.user.following.length > 0
+            .following-info
+              p You are following the following users:
+                ul
+                  each artist in session.user.following
+                    li 
+                      a(class="standalone", href=`/user/${artist._id}`)= artist.username   
+                      form(action=`/user/${artist._id}/unfollow`, method="POST", style="display: inline;")
+                        button(type="submit") Unfollow
+          else
+            .following-info
+              p You are not following any users.
 
-      if session.user.reviews && session.user.reviews.length > 0
-        p Your Reviews
-          ul
-            each review in session.user.reviews
-              li
-                a(class = "standalone",href=`/art/${review.artworkid}`)= review.artwork
-                span.standalone : #{review.text}
-                form(action=`/art/${review.artworkid}/deletereview`, method="POST", style="display: inline;")
-                  input(type="hidden" name="reviewText" value=review.text)
-                  button(type="submit") Delete Review
-      else
-        p You have not made any reviews.
+          if session.user.followedby && session.user.followedby.length > 0
+            .followedby-info
+              p You are followed by the following users:
+                ul
+                  each patron in session.user.followedby
+                    li 
+                      a(class="standalone", href=`/user/${patron._id}`)= patron.username
 
-      if session.user.likes && session.user.likes.length > 0
-        p You have liked the following artworks:
-          ul
-            each likedArtwork in session.user.likes
-              li 
-                a(class = "standalone",href=`/art/${likedArtwork._id}`)= likedArtwork.Title
-                form(action=`/art/${likedArtwork._id}/unlike`, method="POST", style="display: inline;")
-                  button(type="submit") Unlike
-      else
-        p You have not liked any artworks.
+          else
+            .followedby-info
+              p You are not followed by any users.
+
+          if session.user.reviews && session.user.reviews.length > 0
+            .reviews-info
+              p Your Reviews
+                ul
+                  each review in session.user.reviews
+                    li
+                      a(class="standalone", href=`/art/${review.artworkid}`)= review.artwork
+                      span.standalone : #{review.text}
+                      form(action=`/art/${review.artworkid}/deletereview`, method="POST", style="display: inline;")
+                        input(type="hidden" name="reviewText" value=review.text)
+                        button(type="submit") Delete Review
+          else
+            .reviews-info
+              p You have not made any reviews.
+
+          if session.user.likes && session.user.likes.length > 0
+            .likes-info
+              p You have liked the following artworks:
+                ul
+                  each likedArtwork in session.user.likes
+                    li 
+                      a(class="standalone", href=`/art/${likedArtwork._id}`)= likedArtwork.Title
+                      form(action=`/art/${likedArtwork._id}/unlike`, method="POST", style="display: inline;")
+                        button(type="submit") Unlike
+          else
+            .likes-info
+              p You have not liked any artworks.
 
 
-      if session.user.artworks && session.user.artworks.length > 0
-        p You have created the following artworks:
-          ul
-            each art in artworks
-              li 
-                a(class = "standalone",href=`/art/${art._id}`)= art.Title
+          if session.user.artworks && session.user.artworks.length > 0
+            .artworks-info
+              p You have created the following artworks:
+                ul
+                  each art in artworks
+                    li 
+                      a( href=`/art/${art._id}`)= art.Title
+          else
+            .artworks-info
+              p You have not created any artworks.
+        
+          if session.user.workshops && session.user.workshops.length > 0
+            .workshops-info
+              p You have created the following workshops:
+                ul
+                  each workshop in session.user.workshops
+                    li 
+                      a(class="standalone", href=`/main/work/${workshop._id}`)= workshop.title
+          else
+            .workshops-info
+              p You have not created any workshops.
+          
+          if session.user.participatingWorkshops && session.user.participatingWorkshops.length > 0
+            .participating-workshops-info
+              p You are participating in the following workshops:
+                ul
+                  each workshop in session.user.participatingWorkshops
+                    li 
+                      a(class="standalone", href=`/main/work/${workshop._id}`)= workshop.title
+          else
+            .participating-workshops-info
+              p You are not participating in any workshops.
+          .logout-section
+            a( href="/account/logout") Logout
+          if session.user.type === "patron"
+            p Change your account to artist type  
+              a(href="/account/switch") here
+          else if session.user.type === "artist"
+            p Change your account to patron type  
+              a(href="/account/switch") here
+        
       else
-        p You have not created any artworks.
-    
-      if session.user.workshops && session.user.workshops.length > 0
-        p You have created the following workshops:
-          ul
-            each workshop in session.user.workshops
-              li 
-                a(class = "standalone",href=`/main/work/${workshop._id}`)= workshop.title
-      else
-        p You have not created any workshops.
-      
-      if session.user.participatingWorkshops && session.user.participatingWorkshops.length > 0
-        p You are participating in the following workshops:
-          ul
-            each workshop in session.user.participatingWorkshops
-              li 
-                a(class = "standalone",href=`/main/work/${workshop._id}`)= workshop.title
-      else
-        p You are not participating in any workshops.
-
-      a(class = "standalone",href="/account/logout") Logout
-      if session.user.type === "patron"
-        p Change your account to artist type <a href="/account/switch">here</a>
-      else if session.user.type === "artist"
-        p Change your account to patron type <a href="/account/switch">here</a>
-      
-    else
-      p You are not logged in.
-      a(class = "standalone", href="/account/login") Login
+        .login-info
+          p You are not logged in.
+          a(class="standalone", href="/account/login") Login

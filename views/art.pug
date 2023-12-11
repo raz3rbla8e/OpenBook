@@ -1,4 +1,3 @@
-
 html
   head
     title #{artwork.Title} - Art Details
@@ -6,50 +5,50 @@ html
 
   body
     include ./partials/header
-    h1 #{artwork.Title} - Art Details
-    img(class='artwork-image-show', src=artwork.Poster, alt=artwork.Title)
-    ul.artwork-info
-      li
+    div#art-details-content
+      h1 #{artwork.Title} - Art Details
+      img(class='artwork-image-show', src=artwork.Poster, alt=artwork.Title)
+      ul.artwork-info
+        li
           strong Artist:  
           a(href=`/user/${user._id}`)= artwork.Artist
-      li
+        li
           strong Year:  
           span= artwork.Year
-      li
+        li
           strong Category:  
           span= artwork.Category
-      li
+        li
           strong Medium:  
           span= artwork.Medium
-      li
+        li
           strong Description: 
           span= artwork.Description
-    div#reviews
-      if artwork.reviews && artwork.reviews.length > 0
+      div#reviews
+        if artwork.reviews && artwork.reviews.length > 0
           h2 Reviews
           ul
-              each review in artwork.reviews
-                  li
-                      a(href=`/user/${review.user}`)= review.username
-                      span= `: ${review.text}`
-                      if review.user === session.user._id.toString()
-                          form(action=`/art/${artwork._id}/deletereview`, method="POST", style="display: inline;")
-                              input(type="hidden" name="reviewText" value=review.text)
-                              button(type="submit") Delete Review
-      else 
+            each review in artwork.reviews
+              li
+                a(href=`/user/${review.user}`)= review.username
+                span= `: ${review.text}`
+                if review.user === session.user._id.toString()
+                  form(action=`/art/${artwork._id}/deletereview`, method="POST", style="display: inline;")
+                    input(type="hidden" name="reviewText" value=review.text)
+                    button(type="submit") Delete Review
+        else 
           p This artwork has no reviews yet.
-    div#artrate
+      div#artrate
         if user._id.toString() !== session.user._id.toString()
-            form(action=`/art/${artwork._id}/review`, method="POST")
-              label(for="review") Add a Review:
-              input(type="text", name="review", required)
-              button(type="submit") Send Review
-            if artwork.artlikes.includes(session.user._id.toString())
-                form(action=`/art/${artwork._id}/unlike`, method="POST")
-                    button(type="submit") Unlike Artwork
-            else
-                form(action=`/art/${artwork._id}/like`, method="POST")
-                    button(type="submit") Like Artwork
+          form(action=`/art/${artwork._id}/review`, method="POST")
+            label(for="review") Add a Review:
+            input(type="text", name="review", required)
+            button(type="submit") Send Review
+          if artwork.artlikes.includes(session.user._id.toString())
+            form(action=`/art/${artwork._id}/unlike`, method="POST")
+              button(type="submit") Unlike Artwork
+          else
+            form(action=`/art/${artwork._id}/like`, method="POST")
+              button(type="submit") Like Artwork
         if(artwork.artlikes && artwork.artlikes.length > 0)
-            p This artwork has #{artwork.artlikes.length} like(s).
-
+          p This artwork has #{artwork.artlikes.length} like(s).

@@ -1,18 +1,19 @@
 html
   head
     title Register Page
-    link(rel="stylesheet" href="/styles.css")
+    link(rel="stylesheet", href="/styles.css")
 
   body
-    h1 Register
-    form(action="/account/register", method="post")
-      label(for='username') Username:
-      input(type='text', name='username', required)
+    h1#register-title Register
+    form#register-form(action="/account/register", method="post")
+      label#username-label(for='username') Username:
+      input#username-input(type='text', name='username', required)
       br
-      label(for='password') Password:
-      input(type='password', name='password', required)
+      label#password-label(for='password') Password:
+      input#password-input(type='password', name='password', required)
       if error
         p#error= errortype
       br
-      input(type='submit', value='Register')
-    p Already Have an Account? <a href="/account/login">Login here</a>
+      input#register-button(type='submit', value='Register')
+    p#login-link Already have an account? 
+      a(href="/account/login") Login here

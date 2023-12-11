@@ -26,7 +26,7 @@ body
                         img(class='artwork-image', src=artwork.Poster, alt=artwork.Title)
 
             // Pagination links
-            div.pagination
+            div.pagination  
                 if currentPage > 1
                     a(href=`/main/home?page=${currentPage - 1}`) Previous
                 span.page-info Page #{currentPage} of #{totalPages}

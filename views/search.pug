@@ -1,18 +1,18 @@
 head
-  title Search Artworks
-  link(rel="stylesheet" href="/styles.css")
+    title Search Artworks
+    link(rel="stylesheet" href="/styles.css")
 
 body
-  include ./partials/header
-  h1 Search Artworks
+    include ./partials/header
+    h1#search-artworks-title Search Artworks
 
-  form(action="/main/search", method="POST")
-    label(for="searchInput") Search:
-    input(type="text", name="searchInput")
+    form#search-form(action="/main/search", method="POST")
+        label(for="searchInput") Search:
+        input#searchInput(type="text", name="searchInput")
 
-    button(type="submit") Search
+        button#search-button(type="submit") Search
 
-    div
+    div#search-results
         if searchResults.length > 0
             h2 Search Results
 
@@ -28,9 +28,8 @@ body
                     div.artwork-container
                         div
                         a #{artwork.Artist}
-                        a(href=`/art/${artwork._id}`)
-                            img(class='artwork-image', src=artwork.Poster, alt=artwork.Title)
-
+                        a#artwork-link(href=`/art/${artwork._id}`)
+                            img.artwork-image(src=artwork.Poster, alt=artwork.Title)
 
             // Pagination
             div.pagination
@@ -40,4 +39,4 @@ body
                 if currentPage < totalPages
                     a(href=`/main/search?page=${currentPage + 1}`) Next
         else
-            p No results found.
+            p#no-results No results found.

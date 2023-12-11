@@ -6,44 +6,46 @@ html
 
   body
     include ./partials/header
-    h1 #{user.username}'s Profile
-    p #{user.username} is a #{user.type}.
-    if user.followedBy && user.followedBy.length > 0
+    div#profile-content
+      h1 #{user.username}'s Profile
+      p #{user.username} is a #{user.type}.
+      if user.followedBy && user.followedBy.length > 0
         p #{user.username} has #{user.followedBy.length} follower(s).
 
-    if following === true
+      if following === true
         form(action=`/user/${user._id}/unfollow`, method="POST")
-            button(type="submit") Unfollow user
+          button(type="submit") Unfollow user
         p You are following this user.
-    else
+      else
         form(action=`/user/${user._id}/follow`, method="POST")
-            button(class = "standalone",type="submit") Follow user
+          button(class = "standalone",type="submit") Follow user
         p You are not following this user.
-    
-    if reviews && reviews.length > 0
+
+      if reviews && reviews.length > 0
         h2 Their Reviews
-        ul
+        ul#user-reviews
           each review in reviews
             li
-                a(href=`/art/${review.artworkid}`)= review.artwork
-                span : #{review.text}
-    else
+              a(href=`/art/${review.artworkid}`)= review.artwork
+              span : #{review.text}
+      else
         p They have not made any reviews.
 
-    if user.type === "artist"
+      if user.type === "artist"
         if user.artworks && user.artworks.length > 0
-            p #{user.username} has created the following artworks:
-            ul
-                each art in artlist
-                    li 
-                        a(class = "standalone", href=`/art/${art._id}`)= art.Title
+          p #{user.username} has created the following artworks:
+          ul#user-artworks
+            each art in artlist
+              li 
+                a(class = "standalone", href=`/art/${art._id}`)= art.Title
         else
-            p This artist has not created any artworks yet.
+          p This artist has not created any artworks yet.
+        
         if user.workshops && user.workshops.length > 0
-            h2 #{user.username} has created the following workshops:
-            ul
-                each workshop in user.workshops
-                    li 
-                        a(href=`/main/work/${workshop._id}`)= workshop.title
+          h2 #{user.username} has created the following workshops:
+          ul#user-workshops
+            each workshop in user.workshops
+              li 
+                a(href=`/main/work/${workshop._id}`)= workshop.title
         else
-            p This artist has not created any workshops yet.
+          p This artist has not created any workshops yet.

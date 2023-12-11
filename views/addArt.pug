@@ -4,28 +4,29 @@ head
 
 body
   include ./partials/header
-  h1 Add Artwork
+  #add-artwork-content
+    h1#add-artwork-title Add Artwork
 
-  form(action="/main/addArt", method="POST")
-    label(for="title") Title:
-    input(type="text", name="title", required)
+    form#add-artwork-form(action="/main/addArt", method="POST")
+      label(for="title") Title:
+      input#title-input(type="text", name="title", required)
 
-    label(for="year") Year:
-    input(type="text", name="year", required)
+      label(for="year") Year:
+      input#year-input(type="text", name="year", required)
 
-    label(for="category") Category:
-    input(type="text", name="category", required)
+      label(for="category") Category:
+      input#category-input(type="text", name="category", required)
 
-    label(for="medium") Medium:
-    input(type="text", name="medium", required)
+      label(for="medium") Medium:
+      input#medium-input(type="text", name="medium", required)
 
-    label(for="description") Description:
-    textarea(name="description", required)
+      label(for="description") Description:
+      textarea#description-input(name="description", required)
 
-    label(for="poster") Poster URL:
-    input(type="text", name="poster", required)
+      label(for="poster") Poster URL:
+      input#poster-input(type="text", name="poster", required)
 
-    button(type="submit") Add Art
+      button#add-art-button(type="submit") Add Art
     
-  if error
-        p#error= errortype
+    if error
+      p#error= errortype

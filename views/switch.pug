@@ -1,45 +1,45 @@
 html
   head
     title Switch Page
-    link(rel="stylesheet" href="/styles.css")
+    link(rel="stylesheet", href="/styles.css")
 
 body
-  form(action="/account/switch", method="POST")
+  include ./partials/header
+  form#switch-form(action="/account/switch", method="POST")
     if usertype === "patron"
-      h1 Switch to Artist
+      h1#switch-title Switch to Artist
       if(session.user.artworks.length > 0)
-          p You have already created art before, you can switch to artist type now
+          p#switch-info You have already created art before, you can switch to artist type now
 
-          
       else 
-          p You will need to post art to be an Artist type, please provide the following details:
+          p#switch-info You will need to post art to be an Artist type, please provide the following details:
           label(for="title") Title:
-          input(type="text", name="title", required)
+          input#title(type="text", name="title", required)
 
           label(for="year") Year:
-          input(type="text", name="year", required)
+          input#year(type="text", name="year", required)
 
           label(for="category") Category:
-          input(type="text", name="category", required)
+          input#category(type="text", name="category", required)
 
           label(for="medium") Medium:
-          input(type="text", name="medium", required)
+          input#medium(type="text", name="medium", required)
 
           label(for="description") Description:
-          textarea(name="description", required)
+          textarea#description(name="description", required)
 
           label(for="poster") Poster URL:
-          input(type="text", name="poster", required)
+          input#poster(type="text", name="poster", required)
       if error
           p#error= errortype
-      button(type="submit") Switch to Artist
-      p Changed your mind? <a href="/account/dashboard">Go back</a>
+      button#switch-button(type="submit") Switch to Artist
+      p#go-back Changed your mind?
+        a#go-back-link(href="/account/dashboard") Go back
     else if usertype === "artist"
-      h1 Switch to Patron
-      p You will lose the ability to post artworks
+      h1#switch-title Switch to Patron
+      p#switch-info You will lose the ability to post artworks
       if error
           p#error= errortype
-      button(type="submit") Switch to Patron
-      p Changed your mind? <a href="/account/dashboard">Go back</a>
-
-    
+      button#switch-button(type="submit") Switch to Patron
+      p#go-back Changed your mind?
+        a#go-back-link(href="/account/dashboard") Go back
