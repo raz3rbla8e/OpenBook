@@ -2,13 +2,14 @@ html
   head
     title Workshop Information
     link(rel="stylesheet", href="/styles.css")
+    script(src="/client.js")
+
 
 body 
     include ./partials/header
     h1 Workshop Details
     if workshop
         p Title: #{workshop.title}
-        //- p Host: #{workshop.host}
         p Host:
             a(href=`/main/user/${workshop.hostid}`)= workshop.host
         p Location: #{workshop.location}
@@ -22,11 +23,10 @@ body
         p No participants yet.
 
         if (session.user && workshop.host !== session.user.username && (!workshop.participants || !workshop.participants.includes(session.user.username)))
-            form(action=`/main/work/${workshop._id}/join`, method="POST")
-                button(type="submit") Join Workshop
-        
+            button(type="button", onclick=`joinWorkshop('${workshop._id}')`) Join Workshop
+
         if (session.user && workshop.participants && workshop.participants.includes(session.user.username))
-            form(action=`/main/work/${workshop._id}/leave`, method="POST")
-                button(type="submit") Leave Workshop
+            button(type="button", onclick=`leaveWorkshop('${workshop._id}')`) Leave Workshop
+
     else
         p Workshop not found

@@ -48,14 +48,15 @@ router.post('/work/:id/join', async (req, res) => {
     workshop.workshops.id(workshopId).participants.push(req.session.user.username);
     await workshop.save();
 
-    res.redirect(`/main/work/${workshopId}`);
-  } catch (error) {
+    res.status(200).send('Successfully joined workshop');
+    // res.redirect(`/main/work/${workshopId}`);
+  } catch (error) { 
     console.error('Error joining workshop:', error);
     res.status(500).send('Internal Server Error');
   }
 });
 
-router.post('/work/:id/leave', async (req, res) => {
+router.delete('/work/:id/leave', async (req, res) => {
   try {
     // Assuming the workshop id is passed as a parameter in the URL
     const workshopId = req.params.id;
@@ -87,8 +88,10 @@ router.post('/work/:id/leave', async (req, res) => {
     // Save the updated user object to the database
     await user.save();
 
+
     // Redirect the user to their dashboard or any other relevant page
-    res.redirect(`/main/work/${workshopId}`);
+    res.status(200).send('Successfully left workshop');
+    // res.redirect(`/main/work/${workshopId}`);
   } catch (error) {
     console.error('Error leaving workshop:', error);
     res.status(500).send('Internal Server Error');
