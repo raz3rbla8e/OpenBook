@@ -6,6 +6,8 @@ const Artwork = require('./artModel');
 const bodyParser = require('body-parser');
 const accountRouter = require('./accountRouter');
 const mainRouter = require('./mainRouter');
+const artRouter = require('./artRouter');
+const userRouter = require('./userRouter');
 
 const morgan = require('morgan');
 
@@ -48,6 +50,9 @@ app.use(session({
 
 app.use('/account', accountRouter);
 app.use("/main", mainRouter);
+app.use("/art", artRouter);
+app.use("/user", userRouter);
+
 
 app.get('/', async (req, res) => {
     res.render("login");

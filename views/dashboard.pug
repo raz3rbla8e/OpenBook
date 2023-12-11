@@ -15,8 +15,8 @@ html
           ul
             each artist in session.user.following
               li 
-                a(href=`/main/user/${artist._id}`)= artist.username   
-                form(action=`/main/user/${artist._id}/unfollow`, method="POST", style="display: inline;")
+                a(href=`/user/${artist._id}`)= artist.username   
+                form(action=`/user/${artist._id}/unfollow`, method="POST", style="display: inline;")
                   button(type="submit") Unfollow
       else
         p You are not following any users.
@@ -26,7 +26,7 @@ html
           ul
             each patron in session.user.followedby
               li 
-                a(href=`/main/user/${patron._id}`)= patron.username
+                a(href=`/user/${patron._id}`)= patron.username
 
       else
         p You are not followed by any users.
@@ -36,9 +36,9 @@ html
           ul
             each review in session.user.reviews
               li
-                a(href=`/main/art/${review.artworkid}`)= review.artwork
+                a(href=`/art/${review.artworkid}`)= review.artwork
                 span : #{review.text}
-                form(action=`/main/art/${review.artworkid}/deletereview`, method="POST", style="display: inline;")
+                form(action=`/art/${review.artworkid}/deletereview`, method="POST", style="display: inline;")
                   input(type="hidden" name="reviewText" value=review.text)
                   button(type="submit") Delete Review
       else
@@ -49,8 +49,8 @@ html
           ul
             each likedArtwork in session.user.likes
               li 
-                a(href=`/main/art/${likedArtwork._id}`)= likedArtwork.Title
-                form(action=`/main/art/${likedArtwork._id}/unlike`, method="POST", style="display: inline;")
+                a(href=`/art/${likedArtwork._id}`)= likedArtwork.Title
+                form(action=`/art/${likedArtwork._id}/unlike`, method="POST", style="display: inline;")
                   button(type="submit") Unlike
       else
         p You have not liked any artworks.
@@ -61,7 +61,7 @@ html
           ul
             each art in artworks
               li 
-                a(href=`/main/art/${art._id}`)= art.Title
+                a(href=`/art/${art._id}`)= art.Title
       else
         p You have not created any artworks.
     

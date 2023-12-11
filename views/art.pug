@@ -11,22 +11,22 @@ html
     img(class='artwork-image', src=artwork.Poster, alt=artwork.Title)
     ul
       li Artist: 
-        a(href=`/main/user/${user._id}`)= artwork.Artist
+        a(href=`/user/${user._id}`)= artwork.Artist
       li Year: #{artwork.Year}
       li Category: #{artwork.Category}
       li Medium: #{artwork.Medium}
       li Description: #{artwork.Description}
     div#artrate
         if user._id.toString() !== session.user._id.toString()
-            form(action=`/main/art/${artwork._id}/review`, method="POST")
+            form(action=`/art/${artwork._id}/review`, method="POST")
               label(for="review") Add a Review:
               input(type="text", name="review", required)
               button(type="submit") Send Review
             if artwork.artlikes.includes(session.user._id.toString())
-                form(action=`/main/art/${artwork._id}/unlike`, method="POST")
+                form(action=`/art/${artwork._id}/unlike`, method="POST")
                     button(type="submit") Unlike Artwork
             else
-                form(action=`/main/art/${artwork._id}/like`, method="POST")
+                form(action=`/art/${artwork._id}/like`, method="POST")
                     button(type="submit") Like Artwork
         if(artwork.artlikes && artwork.artlikes.length > 0)
             p This artwork has #{artwork.artlikes.length} like(s).
@@ -36,10 +36,10 @@ html
             ul
                 each review in artwork.reviews
                     li
-                        a(href=`/main/user/${review.user}`)= review.username
+                        a(href=`/user/${review.user}`)= review.username
                         span= `: ${review.text}`
                         if review.user === session.user._id.toString()
-                            form(action=`/main/art/${artwork._id}/deletereview`, method="POST", style="display: inline;")
+                            form(action=`/art/${artwork._id}/deletereview`, method="POST", style="display: inline;")
                                 input(type="hidden" name="reviewText" value=review.text)
                                 button(type="submit") Delete Review
         else 

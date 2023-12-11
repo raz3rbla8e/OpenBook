@@ -25,12 +25,10 @@ body
                     
             ul.artworks
                 each artwork in searchResults
-                    //- li
-                    //-     a(href=`/main/art/${artwork._id}`) #{artwork.Title} by #{artwork.Artist}
                     div.artwork-container
                         div
                         a #{artwork.Artist}
-                        a(href=`/main/art/${artwork._id}`)
+                        a(href=`/art/${artwork._id}`)
                             img(class='artwork-image', src=artwork.Poster, alt=artwork.Title)
 
 

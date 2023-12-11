@@ -11,7 +11,7 @@ body
     if workshop
         p Title: #{workshop.title}
         p Host:
-            a(href=`/main/user/${workshop.hostid}`)= workshop.host
+            a(href=`/user/${workshop.hostid}`)= workshop.host
         p Location: #{workshop.location}
         p Date: #{workshop.date}
         if workshop.participants && workshop.participants.length > 0
