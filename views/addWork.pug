@@ -15,5 +15,6 @@ body
 
       label(for="date") Date:
       input#date-input(type="text", name="date", placeholder="YYYY-MM-DD", required)
-
+      if error
+          p#error= errortype
       button#save-button(type="submit") Save

@@ -17,7 +17,12 @@ const userSchema = new mongoose.Schema({
             location: String,
             date: String,
             hostid: String,
-            participants: [],
+            participants: [
+                {
+                    id: String,
+                    username: String,
+                }
+            ],
         }],
     notifications: [{
         idofnot: String,

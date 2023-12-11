@@ -28,7 +28,8 @@ body
                 h3#participants-header Participants
                 ul#participants-list
                     each participant in workshop.participants
-                        li#participant= participant
+                        li#participant
+                            a(href = `/user/${participant.id}`) #{participant.username}
             else
                 p#participants-info No participants yet.
 

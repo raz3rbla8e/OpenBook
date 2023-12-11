@@ -54,12 +54,12 @@ router.post('/work/:id/join', async (req, res) => {
 
         // Add the user to the participants array
 
-        // let data = 
-        // {
-        //     id: req.session.user._id,
-        //     username: req.session.user.username,
-        // }
-        workshop.workshops.id(workshopId).participants.push(req.session.user.username);
+        let data = 
+        {
+            id: req.session.user._id,
+            username: req.session.user.username,
+        }
+        workshop.workshops.id(workshopId).participants.push(data);
         await workshop.save();
 
         res.status(200).send('Successfully joined workshop');
@@ -174,6 +174,12 @@ router.post('/addWork', async (req, res) => {
         }
 
         let { title, location, date } = req.body;
+
+        if (curruser.workshops.some(workshop => workshop.title === title)) {
+            // Workshop with the same title already exists
+            res.render("addWork", {session: req.session, error: true, errortype: "A workshop with that name already exists"});
+            return;
+        }
 
         // Create a new workshop object
         let newWorkshop = {

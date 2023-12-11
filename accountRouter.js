@@ -141,17 +141,22 @@ router.get("/dashboard", async (req, res) => {
                 req.session.user.workshops = user.workshops
 
                 //sets up all the workshops the user is enrolled in
-                let participatingWorkshops = await User.find({ 'workshops.participants': req.session.user.username });
+                let participatingWorkshops = await User.find({ 'workshops.participants.username': req.session.user.username });
                 req.session.user.participatingWorkshops = [];
 
-                participatingWorkshops.forEach(user => {
+                req.session.user.participatingWorkshops = participatingWorkshops.reduce((workshops, user) => {
                 user.workshops.forEach(workshop => {
-                    req.session.user.participatingWorkshops.push({
-                    _id: workshop._id,
-                    title: workshop.title,
+                    workshop.participants.forEach(participant => {
+                    if (participant.username === req.session.user.username) {
+                        workshops.push({
+                        _id: workshop._id,
+                        title: workshop.title,
+                        });
+                    }
                     });
                 });
-                });
+                return workshops;
+                }, []);
 
                 //renders the dashboard pug with all the information eeded
                 res.status(200).render("dashboard", { session: req.session, artworks: artworksobj });
