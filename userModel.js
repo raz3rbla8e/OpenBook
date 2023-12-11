@@ -16,11 +16,13 @@ const userSchema = new mongoose.Schema({
             host: String,
             location: String,
             date: String,
+            hostid: String,
             participants: [],
         }],
     notifications: [{
         idofnot: String,
         artist: String,
+        for: String,
     }]
     
 

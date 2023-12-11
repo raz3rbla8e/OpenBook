@@ -55,16 +55,16 @@ html
       else
         p You have not liked any artworks.
 
-      if session.user.type == "artist"
-        if session.user.artworks && session.user.artworks.length > 0
-          p You have created the following artworks:
-            ul
-              each art in artworks
-                li 
-                  a(href=`/main/art/${art._id}`)= art.Title
-        else
-          p You have not created any artworks.
-      
+
+      if session.user.artworks && session.user.artworks.length > 0
+        p You have created the following artworks:
+          ul
+            each art in artworks
+              li 
+                a(href=`/main/art/${art._id}`)= art.Title
+      else
+        p You have not created any artworks.
+    
       if session.user.workshops && session.user.workshops.length > 0
         p You have created the following workshops:
           ul

@@ -164,13 +164,39 @@ router.post('/addWork', async (req, res) => {
       host: curruser.username,
       location,
       date,
+      hostid: curruser._id.toString(),
     };
 
+    
     // Add the workshop to the user's workshops array
     curruser.workshops.push(newWorkshop);
 
     // Save the updated user object to the database
     await curruser.save();
+
+    let addedWorkshop = curruser.workshops.find(workshop => workshop.title === title);
+
+
+        // Create a notification for the workshop
+    let typeofid = "work".toString();
+
+
+    if (curruser.followedBy) {
+      let followers = curruser.followedBy;
+        let notif = {
+            idofnot: addedWorkshop._id,
+            artist: curruser.username, 
+            for: typeofid,
+        };
+
+      for (let followid of followers) {
+        let follower = await User.findById(followid);
+        if (follower) {
+          follower.notifications.push(notif);
+          await follower.save();
+        }
+      }
+    }
 
     // Redirect the user to their profile or any other relevant page
     res.redirect(`/account/dashboard`);
@@ -272,7 +298,7 @@ router.post('/addArt', async (req, res) => {
             await artistUser.save();
         }
 
-        let typeofid = "art";
+        let typeofid = "art".toString();
 
         if(artistUser.followedBy)
         {
@@ -281,6 +307,7 @@ router.post('/addArt', async (req, res) => {
             let notif = {
                 idofnot: artwork._id,
                 artist: artist,
+                for:typeofid,
             };
 
             for(let followid of followers)

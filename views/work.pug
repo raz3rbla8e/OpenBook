@@ -8,7 +8,9 @@ body
     h1 Workshop Details
     if workshop
         p Title: #{workshop.title}
-        p Host: #{workshop.host}
+        //- p Host: #{workshop.host}
+        p Host:
+            a(href=`/main/user/${workshop.hostid}`)= workshop.host
         p Location: #{workshop.location}
         p Date: #{workshop.date}
         if workshop.participants && workshop.participants.length > 0

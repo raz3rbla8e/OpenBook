@@ -10,10 +10,16 @@ html
     if session.user.notifications && session.user.notifications.length > 0
       ul
         each notification in session.user.notifications
-          li
-            p #{notification.artist} 
-              |  has created a new 
-              a(href=`/main/art/${notification.idofnot}`) artwork
+          if notification.for === "art"
+            li
+              p #{notification.artist} 
+                |  has created a new 
+                a(href=`/main/art/${notification.idofnot}`) artwork
+          if notification.for === "work"
+            li
+              p #{notification.artist} 
+                |  has created a new 
+                a(href=`/main/work/${notification.idofnot}`) workshop
 
     else
       p No notifications yet.
