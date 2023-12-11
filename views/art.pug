@@ -1,5 +1,4 @@
-// views/art.pug
-doctype html
+
 html
   head
     title #{artwork.Title} - Art Details
@@ -8,14 +7,37 @@ html
   body
     include ./partials/header
     h1 #{artwork.Title} - Art Details
-    img(class='artwork-image', src=artwork.Poster, alt=artwork.Title)
-    ul
-      li Artist: 
-        a(href=`/user/${user._id}`)= artwork.Artist
-      li Year: #{artwork.Year}
-      li Category: #{artwork.Category}
-      li Medium: #{artwork.Medium}
-      li Description: #{artwork.Description}
+    img(class='artwork-image-show', src=artwork.Poster, alt=artwork.Title)
+    ul.artwork-info
+      li
+          strong Artist:  
+          a(href=`/user/${user._id}`)= artwork.Artist
+      li
+          strong Year:  
+          span= artwork.Year
+      li
+          strong Category:  
+          span= artwork.Category
+      li
+          strong Medium:  
+          span= artwork.Medium
+      li
+          strong Description: 
+          span= artwork.Description
+    div#reviews
+      if artwork.reviews && artwork.reviews.length > 0
+          h2 Reviews
+          ul
+              each review in artwork.reviews
+                  li
+                      a(href=`/user/${review.user}`)= review.username
+                      span= `: ${review.text}`
+                      if review.user === session.user._id.toString()
+                          form(action=`/art/${artwork._id}/deletereview`, method="POST", style="display: inline;")
+                              input(type="hidden" name="reviewText" value=review.text)
+                              button(type="submit") Delete Review
+      else 
+          p This artwork has no reviews yet.
     div#artrate
         if user._id.toString() !== session.user._id.toString()
             form(action=`/art/${artwork._id}/review`, method="POST")
@@ -30,17 +52,4 @@ html
                     button(type="submit") Like Artwork
         if(artwork.artlikes && artwork.artlikes.length > 0)
             p This artwork has #{artwork.artlikes.length} like(s).
-    div#reviews
-        if artwork.reviews && artwork.reviews.length > 0
-            h2 Reviews
-            ul
-                each review in artwork.reviews
-                    li
-                        a(href=`/user/${review.user}`)= review.username
-                        span= `: ${review.text}`
-                        if review.user === session.user._id.toString()
-                            form(action=`/art/${artwork._id}/deletereview`, method="POST", style="display: inline;")
-                                input(type="hidden" name="reviewText" value=review.text)
-                                button(type="submit") Delete Review
-        else 
-            p This artwork has no reviews yet.
+

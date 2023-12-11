@@ -1,14 +1,15 @@
+// Update your existing Pug template
+
 head
-  title Home
-  link(rel="stylesheet" href="/styles.css")
+    title Home
+    link(rel="stylesheet" href="/styles.css")
 
 body
     include ./partials/header
-    h1 Home
+    h1.center#titlecolor OpenBook
+
     div.artworks
         if artworks && artworks.length > 0
-
-            // Pagination links
             div.pagination
                 if currentPage > 1
                     a(href=`/main/home?page=${currentPage - 1}`) Previous
@@ -16,11 +17,11 @@ body
                 if currentPage < totalPages
                     a(href=`/main/home?page=${currentPage + 1}`) Next
 
-
+                    
             each artwork in artworks
                 div.artwork-container
                     div.artist-info
-                    a #{artwork.Artist}
+                        p #{artwork.Artist}
                     a(href=`/art/${artwork._id}`)
                         img(class='artwork-image', src=artwork.Poster, alt=artwork.Title)
 

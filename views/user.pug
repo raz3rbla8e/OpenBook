@@ -17,7 +17,7 @@ html
         p You are following this user.
     else
         form(action=`/user/${user._id}/follow`, method="POST")
-            button(type="submit") Follow user
+            button(class = "standalone",type="submit") Follow user
         p You are not following this user.
     
     if reviews && reviews.length > 0
@@ -32,11 +32,11 @@ html
 
     if user.type === "artist"
         if user.artworks && user.artworks.length > 0
-            h2 #{user.username} has created the following artworks:
+            p #{user.username} has created the following artworks:
             ul
                 each art in artlist
                     li 
-                        a(href=`/art/${art._id}`)= art.Title
+                        a(class = "standalone", href=`/art/${art._id}`)= art.Title
         else
             p This artist has not created any artworks yet.
         if user.workshops && user.workshops.length > 0
