@@ -27,7 +27,7 @@ html
           each review in reviews
             li
               a(href=`/art/${review.artworkid}`)= review.artwork
-              span : #{review.text}
+              span.white : #{review.text}
       else
         p They have not made any reviews.
 

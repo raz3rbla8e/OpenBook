@@ -53,6 +53,12 @@ router.post('/work/:id/join', async (req, res) => {
         }
 
         // Add the user to the participants array
+
+        // let data = 
+        // {
+        //     id: req.session.user._id,
+        //     username: req.session.user.username,
+        // }
         workshop.workshops.id(workshopId).participants.push(req.session.user.username);
         await workshop.save();
 

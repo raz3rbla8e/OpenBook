@@ -47,7 +47,7 @@ html
                   each review in session.user.reviews
                     li
                       a(class="standalone", href=`/art/${review.artworkid}`)= review.artwork
-                      span.standalone : #{review.text}
+                      span : #{review.text}
                       form(action=`/art/${review.artworkid}/deletereview`, method="POST", style="display: inline;")
                         input(type="hidden" name="reviewText" value=review.text)
                         button(type="submit") Delete Review

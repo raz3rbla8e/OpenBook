@@ -151,7 +151,7 @@ header a {
 #user-artworks li a,
 #user-artworks li span,
 #user-reviews li a,
-#user-reviews li span,
+
 #user-workshops li a,
 #user-workshops li span,
 .artwork-container a,
@@ -449,3 +449,4 @@ label {
     margin-top: 10px;
     text-align: center
 }
+
