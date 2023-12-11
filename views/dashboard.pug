@@ -9,7 +9,7 @@ html
     if session.user
       p Welcome, #{session.user.username}!
       p Your account type is: #{session.user.type}
-
+      a(href="/main/notif") Notifications
       if session.user.following && session.user.following.length > 0
         p You are following the following users:
           ul
@@ -88,6 +88,7 @@ html
         p Change your account to artist type <a href="/account/switch">here</a>
       else if session.user.type === "artist"
         p Change your account to patron type <a href="/account/switch">here</a>
+      
     else
       p You are not logged in.
       a(href="/account/login") Login

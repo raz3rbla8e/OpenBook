@@ -7,6 +7,20 @@ const mongoose = require('mongoose');
 
 let globalSearchCriteria = {}
 
+router.get("/notif", async (req, res) => {
+    if (!(req.session.user)) {
+        res.redirect("/account/login");
+        return;
+    }
+
+    const user = await User.findById(req.session.user._id);
+
+    req.session.user.notifications = user.notifications;
+
+    res.render("notif", { session: req.session });
+});
+
+
 router.post('/work/:id/join', async (req, res) => {
   try {
     const workshopId = req.params.id;
@@ -258,8 +272,32 @@ router.post('/addArt', async (req, res) => {
             await artistUser.save();
         }
 
+        let typeofid = "art";
+
+        if(artistUser.followedBy)
+        {
+            let followers = artistUser.followedBy;
+
+            let notif = {
+                idofnot: artwork._id,
+                artist: artist,
+            };
+
+            for(let followid of followers)
+            {
+                let follower = await User.findById(followid);
+                if(follower)
+                {
+                    follower.notifications.push(notif);
+                    await follower.save();
+                }
+            }
+        }
+
+
+
         // Redirect to a success page or any other desired route
-        res.redirect(`/main/home`);
+        res.redirect(`/main/art/${artwork._id}`);
     } catch (error) {
         console.error('Error adding artwork:', error);
         res.status(500).send('Internal Server Error');

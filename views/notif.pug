@@ -1,0 +1,19 @@
+html
+  head
+    title Notifications
+    link(rel="stylesheet", href="/styles.css")
+
+  body
+    include ./partials/header
+    h1 Notifications
+
+    if session.user.notifications && session.user.notifications.length > 0
+      ul
+        each notification in session.user.notifications
+          li
+            p #{notification.artist} 
+              |  has created a new 
+              a(href=`/main/art/${notification.idofnot}`) artwork
+
+    else
+      p No notifications yet.

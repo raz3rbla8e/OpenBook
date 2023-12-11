@@ -17,9 +17,13 @@ const userSchema = new mongoose.Schema({
             location: String,
             date: String,
             participants: [],
-        }
-    ]
+        }],
+    notifications: [{
+        idofnot: String,
+        artist: String,
+    }]
     
+
 });
 
 
