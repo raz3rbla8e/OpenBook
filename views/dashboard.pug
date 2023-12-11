@@ -13,7 +13,7 @@ html
           p Welcome, #{session.user.username}!
           p Your account type is: #{session.user.type}
           .notification-link
-            a(class="standalone", href="/main/notif") Notifications
+            a( href="/main/notif") Notifications
 
           if session.user.following && session.user.following.length > 0
             .following-info

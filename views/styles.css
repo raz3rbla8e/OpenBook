@@ -1,611 +1,363 @@
-.hide {
-    display: none;
+#reviews span,
+a,
+a:visited,
+body,
+header a {
+    color: #fff
 }
 
-#error {
-    color: red;
+.hide {
+    display: none
 }
 
 .artwork-image {
     width: 500px;
-    /* Adjust the width as needed */
     height: 400px;
-    /* Adjust the height as needed */
     display: block;
-    margin: 0 auto;
-    /* Center the images */
-    margin-bottom: 20px;
-    /* Add some space between images */
-}
-
-.artwork-container {
-    margin-bottom: 20px;
-    text-align: center;
+    margin: 0 auto 20px
 }
 
 .artist-info {
     margin-top: 10px;
+    padding: 10px
 }
 
+#participants-list,
+#reviews ul,
+#user-artworks,
+#user-reviews,
+#user-workshops,
+#workshop-info,
+.artwork-info,
+.artworks,
+.artworks-info ul,
+.followedby-info ul,
+.following-info ul,
+.likes-info ul,
+.participating-workshops-info ul,
+.reviews-info ul,
+.workshops-info ul {
+    list-style: none;
+    padding: 0
+}
 
-#main-header span,
-#artist-header span {
+#artist-header span,
+#main-header span {
     display: inline-block;
-    /* or use display: inline; */
-    margin-right: 10px;
-    /* Add margin or adjust as needed */
+    margin-right: 10px
 }
-
 
 .artworks {
     max-width: 580px;
-    margin: 0 auto;
+    margin: 0 auto
 }
 
-/* Artwork container styles */
-.artwork-container {
-    margin-bottom: 20px;
-    text-align: center;
-    border: 1px solid #ddd;
-    /* Add a subtle border */
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    /* Add a slight shadow for depth */
-    transition: transform 0.3s ease-in-out;
-    /* Add a smooth transition effect */
-}
-
-/* Artist info styles */
-.artist-info {
-    padding: 10px;
-}
-
-
-/* Pagination styles */
-.pagination {
-    text-align: center;
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
-
-.pagination a {
-    display: inline-block;
-    padding: 10px 20px;
-    margin: 0 5px;
-    background-color: #3498db;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 4px;
-}
-
-.pagination a:hover {
-    background-color: #2980b9;
-}
-
+.artwork-container img,
 .artwork-image-show {
     width: 100%;
     max-width: 400px;
     height: auto;
     display: block;
-    margin: 20px auto;
+    margin: 20px auto
+}
+
+#artrate,
+#reviews,
+#titlecolor {
+    margin-top: 20px
 }
 
 body {
-    font-family: 'Arial', sans-serif;
-    color: #fff;
-    background-color: #333;
+    font-family: Arial, sans-serif;
+    background-color: #333
 }
 
 header {
     background-color: #222;
     text-align: center;
-    padding: 10px 0;
+    padding: 10px 0
 }
 
 header a {
-    color: #fff;
     margin: 0 15px;
-    font-weight: bold;
-    text-decoration: none;
-}
-
-a{
-    color:white;
-}
-
-a:visited{
-    color:white;
+    font-weight: 700;
+    text-decoration: none
 }
 
 .center {
-    text-align: center;
+    text-align: center
 }
 
 #titlecolor {
     color: #3498db;
     font-size: 24px;
-    font-weight: bold;
+    font-weight: 700;
     text-align: center;
-    margin-top: 20px;
     text-transform: uppercase;
     letter-spacing: 2px;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, .5)
 }
 
-/* DASHBOARD STUFF */
-#dashboard-content {
-    max-width: 800px;
-    /* Adjust the max-width as needed */
-    margin: 20px auto;
-    /* Center the content */
-    padding: 20px;
-    background-color: #333;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-#dashboard-content h1 {
-    color: #3498db;
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.user-info p {
-    margin-bottom: 10px;
-}
-
-.standalone {
-    color: #3498db;
-    font-weight: bold;
-    text-decoration: none;
-}
-
-.standalone:hover {
-    text-decoration: underline;
-}
-
-.following-info ul,
-.followedby-info ul,
-.reviews-info ul,
-.likes-info ul,
-.artworks-info ul,
-.workshops-info ul,
-.participating-workshops-info ul {
-    list-style: none;
-    padding: 0;
-}
-
-.following-info li,
-.followedby-info li,
-.reviews-info li,
-.likes-info li,
-.artworks-info li,
-.workshops-info li,
-.participating-workshops-info li {
-    margin-bottom: 10px;
-}
-
-.following-info li a,
-.followedby-info li a,
-.reviews-info li a,
-.likes-info li a,
-.artworks-info li a,
-.workshops-info li a,
-.participating-workshops-info li a {
-    color: #3498db;
-    font-weight: bold;
-    text-decoration: none;
-}
-
-.following-info form,
-.reviews-info form,
-.likes-info form {
-    display: inline;
-    margin-left: 10px;
-}
-
-.following-info button,
-.reviews-info button,
-.likes-info button {
-    background-color: #e74c3c;
-    color: #fff;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.following-info button:hover,
-.reviews-info button:hover,
-.likes-info button:hover {
-    background-color: #c0392b;
-}
-
-.logout-section a,
-.notification-link {
-    display: inline-block;
-    padding: 10px 20px;
-    margin-top: 20px;
-    text-align: center;
-    text-decoration: none;
-    color: #fff;
-    border-radius: 4px;
-    transition: background-color 0.3s ease-in-out;
-}
-
-.logout-section a {
-    background-color: #e74c3c;
-}
-
-.logout-section a:hover {
-    background-color: #c0392b;
-}
-
-.notification-link {
-    background-color: #3498db;
-}
-
-.notification-link:hover {
-    background-color: #2980b9;
-}
-
-/* Art Details Styles */
-#art-details-content {
-    max-width: 800px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #333;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-#art-details-content h1 {
-    color: #3498db;
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.artwork-info {
-    list-style: none;
-    padding: 0;
-}
-
-.artwork-info li {
-    margin-bottom: 10px;
-}
-
-.artwork-info li strong {
-    color: #3498db;
-}
-
-.artwork-info li a,
-.artwork-info li span {
-    color: #fff;
-    font-weight: bold;
-}
-
-#reviews {
-    margin-top: 20px;
-}
-
-#reviews h2 {
-    color: #3498db;
-}
-
-#reviews ul {
-    list-style: none;
-    padding: 0;
-}
-
-#reviews li {
-    margin-bottom: 10px;
-}
-
-#reviews li a {
-    color: #3498db;
-    font-weight: bold;
-    text-decoration: none;
-}
-
-#reviews span {
-    color: #fff;
-}
-
-#reviews form {
-    display: inline;
-    margin-left: 10px;
-}
-
-#reviews button {
-    background-color: #e74c3c;
-    color: #fff;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-#reviews button:hover {
-    background-color: #c0392b;
-}
-
-#artrate {
-    margin-top: 20px;
-}
-
-#artrate form {
-    margin-top: 10px;
-}
-
-#artrate label {
-    color: #3498db;
-    font-weight: bold;
-}
-
-#artrate input {
-    width: 100%;
-    padding: 5px;
-    margin-top: 5px;
-    box-sizing: border-box;
-}
-
-#artrate button {
-    background-color: #3498db;
-    color: #fff;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-#artrate button:hover {
-    background-color: #2980b9;
-}
-
-#artrate p {
-    color: #fff;
-    margin-top: 10px;
-}
-
-#artrate form button[type="submit"] {
-    background-color: #3498db;
-}
-
-#artrate form button[type="submit"]:hover {
-    background-color: #2980b9;
-}
-
-#artrate form button[type="submit"]:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-}
-
-#artrate form button[type="submit"]:disabled:hover {
-    background-color: #ccc;
-}
-
-#artrate p {
-    color: #fff;
-}
-
-#artrate p.like-count {
-    margin-top: 10px;
-}
-
-
-
-/*USER PAGE*/
-#profile-content {
-    max-width: 800px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #333;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-#profile-content h1 {
-    color: #3498db;
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-#user-reviews,
-#user-artworks,
-#user-workshops {
-    list-style: none;
-    padding: 0;
-}
-
-#user-reviews li,
-#user-artworks li,
-#user-workshops li {
-    margin-bottom: 10px;
-}
-
-#user-reviews li a,
-#user-artworks li a,
-#user-workshops li a,
-#user-reviews li span,
-#user-artworks li span,
-#user-workshops li span {
-    color: #3498db;
-    font-weight: bold;
-    text-decoration: none;
-}
-
-#user-reviews li a:hover,
-#user-artworks li a:hover,
-#user-workshops li a:hover {
-    text-decoration: underline;
-}
-
-#profile-content p {
-    color: #fff;
-    margin-top: 10px;
-}
-
-#profile-content button {
-    background-color: #3498db;
-    color: #fff;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-#profile-content button:hover {
-    background-color: #2980b9;
-}
-
-/*addart*/
-#add-artwork-content {
-    max-width: 800px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #333;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-#add-artwork-title {
-    color: #3498db;
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-#add-artwork-form {
-    display: flex;
-    flex-direction: column;
-}
-
-#add-artwork-form label {
-    color: #fff;
-    margin-top: 10px;
-}
-
-#add-artwork-form input,
-#add-artwork-form textarea {
-    width: 100%;
-    padding: 5px;
-    margin-top: 5px;
-    box-sizing: border-box;
-}
-
-#add-art-button {
-    background-color: #3498db;
-    color: #fff;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-top: 10px;
-}
-
-#add-art-button:hover {
-    background-color: #2980b9;
-}
-
-#error-message {
-    color: red;
-}
-
-/*addwork*/
-#add-workshop-content {
-    max-width: 800px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #333;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-#add-workshop-title {
-    color: #3498db;
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-#add-workshop-form {
-    display: flex;
-    flex-direction: column;
-}
-
-#add-workshop-form label {
-    color: #fff;
-    margin-top: 10px;
-}
-
-#add-workshop-form input {
-    width: 100%;
-    padding: 5px;
-    margin-top: 5px;
-    box-sizing: border-box;
-}
-
-#save-button {
-    background-color: #3498db;
-    color: #fff;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-top: 10px;
-}
-
-#save-button:hover {
-    background-color: #2980b9;
-}
-
-
-/*workshop*/
-#workshop-title {
-    color: #3498db;
-    text-align: center;
-    margin-bottom: 20px;
-}
-
+#add-artwork-content,
+#add-workshop-content,
+#art-details-content,
+#dashboard-content,
+#profile-content,
 #workshop-details {
     max-width: 800px;
     margin: 20px auto;
     padding: 20px;
     background-color: #333;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, .1)
 }
 
-#workshop-info {
-    list-style: none;
-    padding: 0;
-    margin-bottom: 20px;
-}
-
-#workshop-info li {
-    margin-bottom: 10px;
-}
-
-#workshop-info li strong {
+#add-artwork-title,
+#add-workshop-title,
+#art-details-content h1,
+#dashboard-content h1,
+#login-title,
+#profile-content h1,
+#register-title,
+#search-artworks-title,
+#switch-title,
+#workshop-title {
     color: #3498db;
+    text-align: center;
+    margin-bottom: 20px
+}
+
+#participants-list li,
+#reviews li,
+#user-artworks li,
+#user-reviews li,
+#user-workshops li,
+#workshop-info li,
+.artwork-info li,
+.artworks-info li,
+.followedby-info li,
+.following-info li,
+.likes-info li,
+.participating-workshops-info li,
+.reviews-info li,
+.user-info p,
+.workshops-info li {
+    margin-bottom: 10px
+}
+
+#login-link a,
+#register-link a,
+#reviews li a,
+#user-artworks li a,
+#user-artworks li span,
+#user-reviews li a,
+#user-reviews li span,
+#user-workshops li a,
+#user-workshops li span,
+.artwork-container a,
+.artworks-info li a,
+.followedby-info li a,
+.following-info li a,
+.likes-info li a,
+.participating-workshops-info li a,
+.reviews-info li a,
+.standalone,
+.workshops-info li a {
+    color: #3498db;
+    font-weight: 700;
+    text-decoration: none
+}
+
+#login-link a:hover,
+#register-link a:hover,
+#user-artworks li a:hover,
+#user-reviews li a:hover,
+#user-workshops li a:hover,
+.standalone:hover {
+    text-decoration: underline
+}
+
+#login-form,
+#register-form,
+#switch-form {
+    padding: 20px;
+    background-color: #333;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, .1)
+}
+
+#reviews form,
+.following-info form,
+.likes-info form,
+.reviews-info form {
+    display: inline;
+    margin-left: 10px
+}
+
+#reviews button,
+.following-info button,
+.likes-info button,
+.reviews-info button {
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer
+}
+
+.logout-section a,
+.notification-link,
+.pagination a {
+    display: inline-block;
+    padding: 10px 20px;
+    text-decoration: none
+}
+
+#reviews button:hover,
+.following-info button:hover,
+.likes-info button:hover,
+.logout-section a:hover,
+.reviews-info button:hover {
+    background-color: #c0392b
+}
+
+.logout-section a,
+.notification-link {
+    margin-top: 20px;
+    text-align: center;
+    color: #fff;
+    border-radius: 4px;
+    transition: background-color .3s ease-in-out
+}
+
+.logout-section a {
+    background-color: #e74c3c
+}
+
+#artrate form button[type=submit],
+.notification-link
+ {
+    background-color: #3498db
+}
+
+#add-art-button:hover,
+#artrate button:hover,
+#artrate form button[type=submit]:hover,
+#go-back-link:hover,
+#join-button:hover,
+#leave-button:hover,
+#login-button:hover,
+#profile-content button:hover,
+#register-button:hover,
+#save-button:hover,
+#search-button:hover,
+#switch-button:hover,
+.notification-link:hover,
+.pagination a:hover {
+    background-color: #2980b9
+}
+
+#participants-header,
+#reviews h2,
+#workshop-info li strong,
+.artwork-info li strong {
+    color: #3498db
 }
 
 #workshop-info li a,
-#workshop-info li span {
+#workshop-info li span,
+.artwork-info li a,
+.artwork-info li span {
     color: #fff;
-    font-weight: bold;
+    font-weight: 700
 }
 
-#participants-header {
+#artrate form,
+#artrate p.like-count {
+    margin-top: 10px
+}
+
+#artrate label {
     color: #3498db;
+    font-weight: 700
 }
 
-#participants-list {
-    list-style: none;
-    padding: 0;
+#add-artwork-form input,
+#add-artwork-form textarea,
+#add-workshop-form input,
+#artrate input,
+#password-input,
+#searchInput,
+#username-input,
+input,
+textarea {
+    width: 100%;
+    padding: 5px;
+    margin-top: 5px;
+    box-sizing: border-box
 }
 
-#participants-list li {
-    margin-bottom: 10px;
+#artrate button,
+#profile-content button {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer
+}
+
+#artrate p {
+    margin-top: 10px;
+    color: #fff
+}
+
+#artrate form button[type=submit]:disabled {
+    background-color: #ccc;
+    cursor: not-allowed
+}
+
+#artrate form button[type=submit]:disabled:hover {
+    background-color: #ccc
+}
+
+#add-artwork-form label,
+#add-workshop-form label,
+#password-label,
+#profile-content p,
+#username-label,
+label {
+    color: #fff;
+    margin-top: 10px
+}
+
+#add-artwork-form,
+#add-workshop-form {
+    display: flex;
+    flex-direction: column
+}
+
+#add-art-button,
+#login-button,
+#register-button,
+#save-button,
+#search-button {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px
+}
+
+#error,
+#error-message {
+    color: red
+}
+
+#workshop-info {
+    margin-bottom: 20px
 }
 
 #join-button,
@@ -616,69 +368,27 @@ a:visited{
     padding: 5px 10px;
     border-radius: 4px;
     cursor: pointer;
-    margin-top: 20px;
+    margin-top: 20px
 }
 
-#join-button:hover,
-#leave-button:hover {
-    background-color: #2980b9;
-}
-
+#no-results,
+#switch-info,
 #workshop-not-found {
     color: #fff;
     text-align: center;
-    margin-top: 20px;
-}
-
-/* SEARCH ARTWORKS PAGE */
-#search-artworks-title {
-    color: #3498db;
-    text-align: center;
-    margin-bottom: 20px;
+    margin-top: 20px
 }
 
 #search-form {
     display: flex;
     flex-direction: column;
     max-width: 300px;
-    margin: 0 auto;
-}
-
-#searchInput {
-    width: 100%;
-    padding: 5px;
-    margin-top: 5px;
-    box-sizing: border-box;
-}
-
-#search-button {
-    background-color: #3498db;
-    color: #fff;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-top: 10px;
-}
-
-#search-button:hover {
-    background-color: #2980b9;
+    margin: 0 auto
 }
 
 #search-results {
     max-width: 800px;
-    margin: 20px auto;
-}
-
-#no-results {
-    color: #fff;
-    text-align: center;
-    margin-top: 20px;
-}
-
-.artworks {
-    list-style: none;
-    padding: 0;
+    margin: 20px auto
 }
 
 .artwork-container {
@@ -687,89 +397,35 @@ a:visited{
     border: 1px solid #ddd;
     border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease-in-out;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, .1);
+    transition: transform .3s ease-in-out
 }
 
 .artwork-container:hover {
-    transform: scale(1.05);
-}
-
-.artwork-container img {
-    width: 100%;
-    max-width: 400px;
-    height: auto;
-    display: block;
-    margin: 20px auto;
-}
-
-.artwork-container a {
-    color: #3498db;
-    font-weight: bold;
-    text-decoration: none;
+    transform: scale(1.05)
 }
 
 .pagination {
     text-align: center;
     margin-top: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 20px
 }
 
 .pagination a {
-    display: inline-block;
-    padding: 10px 20px;
     margin: 0 5px;
     background-color: #3498db;
     color: #fff;
-    text-decoration: none;
-    border-radius: 4px;
-}
-
-.pagination a:hover {
-    background-color: #2980b9;
-}
-
-/* SWITCH PAGE STYLES */
-#switch-title {
-    color: #3498db;
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-#switch-info {
-    color: #fff;
-    text-align: center;
-    margin-top: 20px;
-}
-
-#error {
-    color: red;
+    border-radius: 4px
 }
 
 #switch-form {
     max-width: 600px;
     margin: 0 auto;
-    padding: 20px;
-    background-color: #333;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px
 }
 
-label {
-    color: #fff;
-    margin-top: 10px;
-}
-
-input,
-textarea {
-    width: 100%;
-    padding: 5px;
-    margin-top: 5px;
-    box-sizing: border-box;
-}
-
-#switch-button,
-#go-back-link {
+#go-back-link,
+#switch-button {
     background-color: #3498db;
     color: #fff;
     border: none;
@@ -777,138 +433,19 @@ textarea {
     border-radius: 4px;
     cursor: pointer;
     margin-top: 10px;
-    text-decoration: none;
+    text-decoration: none
 }
 
-#switch-button:hover,
-#go-back-link:hover {
-    background-color: #2980b9;
-}
-
-/* LOGIN PAGE STYLES */
-#login-title {
-    color: #3498db;
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-#login-form {
-    max-width: 400px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #333;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-#username-label,
-#password-label {
-    color: #fff;
-    margin-top: 10px;
-}
-
-#username-input,
-#password-input {
-    width: 100%;
-    padding: 5px;
-    margin-top: 5px;
-    box-sizing: border-box;
-}
-
-#error {
-    color: red;
-}
-
-#login-button {
-    background-color: #3498db;
-    color: #fff;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-top: 10px;
-}
-
-#login-button:hover {
-    background-color: #2980b9;
-}
-
-#register-link {
-    color: #fff;
-    margin-top: 10px;
-    text-align: center;
-}
-
-#register-link a {
-    color: #3498db;
-    font-weight: bold;
-    text-decoration: none;
-}
-
-#register-link a:hover {
-    text-decoration: underline;
-}
-
-/* REGISTER PAGE STYLES */
-#register-title {
-    color: #3498db;
-    text-align: center;
-    margin-bottom: 20px;
-}
-
+#login-form,
 #register-form {
     max-width: 400px;
     margin: 20px auto;
-    padding: 20px;
-    background-color: #333;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px
 }
 
-#username-label,
-#password-label {
+#login-link,
+#register-link {
     color: #fff;
     margin-top: 10px;
-}
-
-#username-input,
-#password-input {
-    width: 100%;
-    padding: 5px;
-    margin-top: 5px;
-    box-sizing: border-box;
-}
-
-#error {
-    color: red;
-}
-
-#register-button {
-    background-color: #3498db;
-    color: #fff;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-top: 10px;
-}
-
-#register-button:hover {
-    background-color: #2980b9;
-}
-
-#login-link {
-    color: #fff;
-    margin-top: 10px;
-    text-align: center;
-}
-
-#login-link a {
-    color: #3498db;
-    font-weight: bold;
-    text-decoration: none;
-}
-
-#login-link a:hover {
-    text-decoration: underline;
+    text-align: center
 }
