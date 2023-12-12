@@ -29,13 +29,20 @@ router.post('/work/:id/join', async (req, res) => {
     try {
         const workshopId = req.params.id;
 
-        if(mongoose.Types.ObjectId.isValid(workshopId) === false) {
-            return res.redirect("/")
+        if (!mongoose.Types.ObjectId.isValid(workshopId)) {
+            return res.redirect("/");
         }
 
         // Check if the user is logged in
         if (!req.session.user) {
             return res.redirect('/account/login');
+        }
+
+        // Check if the user is already a participant
+        const user = await User.findOne({ 'workshops._id': workshopId, 'participants.username': req.session.user.username });
+
+        if (user) {
+            return res.redirect('/account/dashboard'); // User is already a participant
         }
 
         // Find the workshop
@@ -44,26 +51,18 @@ router.post('/work/:id/join', async (req, res) => {
             return res.redirect('/account/dashboard');
         }
 
-        // Check if the user is the host or already a participant
-        if (
-            workshop.host === req.session.user.username ||
-            (workshop.participants && workshop.participants.includes(req.session.user.username))
-        ) {
-            return res.redirect('/account/dashboard'); // User is already a participant or the host
-        }
-
         // Add the user to the participants array
+        const workshopIndex = workshop.workshops.findIndex(w => w._id.toString() === workshopId);
 
-        let data = 
-        {
-            id: req.session.user._id,
-            username: req.session.user.username,
+        if (workshopIndex !== -1) {
+            workshop.workshops[workshopIndex].participants.push({
+                id: req.session.user._id,
+                username: req.session.user.username,
+            });
+            await workshop.save();
         }
-        workshop.workshops.id(workshopId).participants.push(data);
-        await workshop.save();
-
         res.status(200).send('Successfully joined workshop');
-    } catch (error) { 
+    } catch (error) {
         console.error('Error joining workshop:', error);
         res.status(500).send('Internal Server Error');
     }
@@ -74,32 +73,27 @@ router.delete('/work/:id/leave', async (req, res) => {
     try {
         const workshopId = req.params.id;
 
-        if(mongoose.Types.ObjectId.isValid(workshopId) === false) {
-            return res.redirect("/")
+        if (!mongoose.Types.ObjectId.isValid(workshopId)) {
+            return res.redirect("/");
         }
-        // Find the user with the workshop
+
+         // Find the user
         const user = await User.findOne({ 'workshops._id': workshopId });
 
         if (!user) {
-            // Workshop or user not found
-            res.redirect('/account/dashboard');
-            return;
+            return res.redirect('/account/dashboard');
         }
 
-        // Find the workshop in the user's workshops array
+        // Find the workshop index
         const workshopIndex = user.workshops.findIndex(w => w._id.toString() === workshopId);
 
         if (workshopIndex === -1) {
-            // Workshop not found
-            res.redirect('/account/dashboard');
-            return;
+            return res.redirect('/account/dashboard');
         }
 
         // Remove the user from the participants array
-        const userIndex = user.workshops[workshopIndex].participants.indexOf(req.session.user.username);
-        if (userIndex !== -1) {
-            user.workshops[workshopIndex].participants.splice(userIndex, 1);
-        }
+        const participants = user.workshops[workshopIndex].participants.filter(participant => participant.username !== req.session.user.username);
+        user.workshops[workshopIndex].participants = participants;
 
         // Save the updated user object to the database
         await user.save();

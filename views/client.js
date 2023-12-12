@@ -1,11 +1,10 @@
-
-//function to join the workshop, sends a post request to the server
+// Function to join the workshop, sends a POST request to the server
 function joinWorkshop(workshopId) {
   var xhr = new XMLHttpRequest();
   xhr.open('POST', `/main/work/${workshopId}/join`);
 
   xhr.onreadystatechange = function () {
-    if (xhr.readyState === 4) {  
+    if (xhr.readyState === 4) {
       if (xhr.status >= 200 && xhr.status < 300) {
         console.log('Successfully joined workshop');
         window.location.href = `/main/work/${workshopId}`;
@@ -18,14 +17,12 @@ function joinWorkshop(workshopId) {
   xhr.send();
 }
 
-//function to leave workshop, sends a delete request to the server
+// Function to leave workshop, sends a DELETE request to the server
 function leaveWorkshop(workshopId) {
   var xhr = new XMLHttpRequest();
   xhr.open('DELETE', `/main/work/${workshopId}/leave`, true);
-  xhr.setRequestHeader('Content-Type', 'application/json');
-
   xhr.onreadystatechange = function () {
-    if (xhr.readyState === 4) {  
+    if (xhr.readyState === 4) {
       if (xhr.status >= 200 && xhr.status < 300) {
         console.log('Successfully left workshop');
         window.location.href = `/main/work/${workshopId}`;
@@ -38,6 +35,3 @@ function leaveWorkshop(workshopId) {
 
   xhr.send();
 }
-
-
-

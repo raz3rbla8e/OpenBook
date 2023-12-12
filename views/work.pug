@@ -33,11 +33,12 @@ body
             else
                 p#participants-info No participants yet.
 
-            if (session.user && workshop.host !== session.user.username && (!workshop.participants || !workshop.participants.includes(session.user.username)))
+            if (session.user && workshop.host !== session.user.username && (!workshop.participants.some(participant => participant.username === session.user.username)))
                 button#join-button(type="button", onclick=`joinWorkshop('${workshop._id}')`) Join Workshop
 
-            if (session.user && workshop.participants && workshop.participants.includes(session.user.username))
+            if (session.user && workshop.participants && workshop.participants.some(participant => participant.username === session.user.username))
                 button#leave-button(type="button", onclick=`leaveWorkshop('${workshop._id}')`) Leave Workshop
+
 
     else
         p#workshop-not-found Workshop not found
